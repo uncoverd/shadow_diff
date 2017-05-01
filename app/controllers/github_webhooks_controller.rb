@@ -3,10 +3,13 @@ class GithubWebhooksController < ActionController::Base
 
   def github_pull_request(payload)
     proxy = DuplexProxy.new
-    if payload['action'] == 'labeled' && payload['label']['name'] == 'duplicate'
-      proxy.start(payload['head']['repo']['full_name'], payload['head']['sha'])
-    elsif payload['action'] == 'unlabeled' && payload['label']['name'] == 'duplicate'
-      proxy.stop
+    repo_name = payload['head']['repo']['full_name']
+    commit_hash = payload['head']['sha']
+    
+    if pull_request_labeled(payload)
+      proxy.start(repo_name, commit_hash)
+    elsif pull_request_unlabeled(payload)
+      proxy.stop(repo_name, commit_hash)
     end    
   end
 
@@ -14,4 +17,13 @@ class GithubWebhooksController < ActionController::Base
     "hunter2"
   end
 
+  private
+
+  def pull_request_labeled(payload)
+    payload['action'] == 'labeled' && payload['label']['name'] == 'duplicate'
+  end
+
+  def pull_request_unlabeled(payload)
+    payload['action'] == 'unlabeled' && payload['label']['name'] == 'duplicate'
+  end  
 end
