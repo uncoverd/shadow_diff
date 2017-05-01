@@ -8,18 +8,17 @@ class DuplexProxy
     notify_github(repo, commit, 'pending')
   end
 
-  def stop
+  def stop(repo, commit)
     puts "STOPING PROXY"
     kill_proxy
     notify_github(repo, commit, 'failure')
-
   end
 
   private
 
   def notify_github(repo, commit, status)
     Octokit.create_status(repo, commit,
-                     status, :context => 'Shadow Diff', :context => 'commit passed')
+                     status, :context => 'Shadow Diff', :description => 'commit passed')
   end
 
   def spawn_proxy
