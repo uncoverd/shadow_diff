@@ -1,0 +1,1 @@
+REDIS = ConnectionPool.new(size: 10) { Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0) }
