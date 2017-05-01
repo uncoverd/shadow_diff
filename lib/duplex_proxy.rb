@@ -1,16 +1,26 @@
 class DuplexProxy
-  
-  def start
+
+  def start(repo, commit)
     puts "STARTING PROXY"
+    puts repo
+    puts commit
     spawn_proxy
+    notify_github(repo, commit, 'pending')
   end
 
   def stop
     puts "STOPING PROXY"
     kill_proxy
+    notify_github(repo, commit, 'failure')
+
   end
 
   private
+
+  def notify_github(repo, commit, status)
+    Octokit.create_status(repo, commit,
+                     status, :context => 'Shadow Diff', :context => 'commit passed')
+  end
 
   def spawn_proxy
     REDIS.with do |conn|
