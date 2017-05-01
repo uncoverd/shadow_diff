@@ -54,3 +54,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'redis', '~>3.2'
 gem 'diffy', '~>3.2'
+gem 'github_webhook', '~> 1.0.4'
