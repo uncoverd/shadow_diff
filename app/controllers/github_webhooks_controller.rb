@@ -2,7 +2,11 @@ class GithubWebhooksController < ActionController::Base
   include GithubWebhook::Processor
 
   def github_pull_request(payload)
-      puts payload
+    if payload['label']['name'] == 'duplicate'
+        puts "Starting proxy"
+    else
+        puts "Stopping proxy"
+    end    
   end    
 
   def webhook_secret(payload)
