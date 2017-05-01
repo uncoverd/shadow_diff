@@ -29,7 +29,7 @@ class DuplexProxy
 
   def spawn_proxy
     REDIS.with do |conn|
-      if conn.get("proxy_PID") == "nil"
+      if conn.get("proxy_PID").to_i == 0
         pid = Process.spawn("ruby #{Rails.root.join('em_proxy.rb')}")
         Process.detach(pid)
         conn.set("proxy_PID", pid)
@@ -42,7 +42,7 @@ class DuplexProxy
   def kill_proxy
     REDIS.with do |conn|
       Process.kill("TERM", conn.get("proxy_PID").to_i)
-      conn.set("proxy_PID", "nil")
+      conn.set("proxy_PID", "0")
     end
   end  
 end    
