@@ -8,8 +8,8 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
   @start = Time.now
   @data = Hash.new("")
 
-  conn.server :production, :host => "localhost", :port => 8100    # production, will render resposne
-  conn.server :shadow, :host => "localhost", :port => 8200    # testing, internal only
+  conn.server :production, :host => ENV['MASTER_SHADOW'], :port => 3000    # production, will render resposne
+  conn.server :shadow, :host => ENV['SLAVE_SHADOW'], :port => 3000    # testing, internal only
 
   conn.on_data do |data|
     request_id = data.scan(/X-Request-Id: .*$/).first
