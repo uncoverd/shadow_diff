@@ -17,7 +17,7 @@ rackup      DefaultRackup
 port        ENV['PORT']     || 3000
 environment ENV['RACK_ENV'] || 'development'
 
-stdout_redirect '/home/deploy/promet/shared/log/puma_stdout', '/home/deploy/promet/shared/log/puma_stderr', true
+stdout_redirect '/home/deploy/shadow_diff/shared/log/puma_stdout', '/home/deploy/shadow_diff/shared/log/puma_stderr', true
 
 prune_bundler
 #on_worker_boot do
