@@ -12,7 +12,6 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
   conn.server :shadow, :host => ENV['SLAVE_SHADOW'], :port => 3000    # testing, internal only
 
   conn.on_data do |data|
-    request_id = data.scan(/X-Request-Id: .*$/).first
     id = "request-" + uuid.generate.to_s 
     redis.hset(id, :request, data)
     redis.hset(id, :time, Time.now.ctime)
