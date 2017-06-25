@@ -18,8 +18,8 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     else
       id = uuid.generate
     end  
-    redis.hset(id, :request, data)
-    redis.hset(id, :time, Time.now.ctime)
+    redis.hset("request-" + id, :request, data)
+    redis.hset("request-" + id, :time, Time.now.ctime)
     data
   end
 
