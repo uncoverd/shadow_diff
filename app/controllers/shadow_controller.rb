@@ -1,7 +1,7 @@
 class ShadowController < ApplicationController
 
     def index
-        @requests = ShadowRequest.new   
+        redis_requests = RedisRequest.new
+        @requests = redis_requests.all
     end    
-
 end
