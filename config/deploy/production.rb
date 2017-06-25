@@ -8,7 +8,7 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 
-SERVER_IP = '188.226.164.233'
+SERVER_IP = '188.166.37.200'
 USERNAME = 'deploy'
 role :app, ["#{USERNAME}@#{SERVER_IP}"]
 role :web, ["#{USERNAME}@#{SERVER_IP}"]

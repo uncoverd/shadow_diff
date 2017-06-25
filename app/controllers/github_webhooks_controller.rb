@@ -5,6 +5,8 @@ class GithubWebhooksController < ActionController::Base
     proxy = DuplexProxy.new
     repo_name = payload['pull_request']['head']['repo']['full_name']
     commit_hash = payload['pull_request']['head']['sha']
+    puts repo_name
+    puts commit_hash
     
     if pull_request_labeled(payload)
       proxy.start(repo_name, commit_hash)

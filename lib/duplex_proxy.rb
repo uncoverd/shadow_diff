@@ -9,6 +9,8 @@ class DuplexProxy
 
   def start(repo, commit)
     puts "STARTING PROXY"
+    puts repo
+    puts commit
     spawn_proxy
     notify_github(repo, commit, 'pending')
   end
