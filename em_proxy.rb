@@ -13,13 +13,9 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
 
   conn.on_data do |data|
     request_id = data.scan(/X-Request-Id: .*$/).first
-    if request_id
-      id = request_id.split(":")[1].strip
-    else
-      id = uuid.generate
-    end  
-    redis.hset("request-" + id, :request, data)
-    redis.hset("request-" + id, :time, Time.now.ctime)
+    id = "request-" + uuid.generate.to_s 
+    redis.hset(id, :request, data)
+    redis.hset(id, :time, Time.now.ctime)
     data
   end
 
