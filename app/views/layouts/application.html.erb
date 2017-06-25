@@ -3,12 +3,22 @@
   <head>
     <title>ShadowDiff</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="active"><%= link_to "Domov", root_path %></li>
+          <li><%= link_to "Izpis", root_path %></li>
+        </ul>
+      </div>
+    </nav>
+  
+  <div class="container col-md-10 col-md-offset-1">
     <%= yield %>
+  </div>
   </body>
 </html>
