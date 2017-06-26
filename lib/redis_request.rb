@@ -13,6 +13,12 @@ class RedisRequest
             end
         end
         requests    
-    end    
+    end
 
+    def find(request_id)
+        REDIS.with do |connection|
+            serializer = RequestSerializer.new(connection)
+            serializer.find(request_id)
+        end
+    end
 end    

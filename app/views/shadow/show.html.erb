@@ -1,0 +1,13 @@
+<div class="container col-md-10 col-md-offset-1">
+<style><%= Diffy::CSS %></style>
+    <div class="panel panel-default">
+        <div class="panel-heading">Request <%= @request.id %></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6"><%= Diffy::SplitDiff.new(@request.production_response, @request.shadow_response, :format => :html).left.html_safe %></div>
+                <div class="col-md-6"><%= Diffy::SplitDiff.new(@request.production_response, @request.shadow_response, :format => :html).right.html_safe %></div>
+            </div>
+    </div>
+</div>
+   
+</div>

@@ -1,3 +1,24 @@
-<% @requests.each do |request| %>
-    <%= request.id %> </br>
-<% end %>
+<div class="container col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+        <div class="panel-heading">Requests</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Time</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                <% @requests.each do |request| %>
+                    <tr>
+                        <th scope="row"><%= link_to request.id, request_path(request.id) %></th>
+                        <td><%= request.time %></td>
+                    </tr> 
+                <% end %>
+                </tbody>
+            </table>
+    </div>
+</div>
+   
+</div>
