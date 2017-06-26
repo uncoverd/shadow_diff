@@ -1,4 +1,4 @@
-class RedisRequest
+class RedisResponse
     def initialize
     end
 
@@ -7,7 +7,7 @@ class RedisRequest
         REDIS.with do |connection|
             keys = []
             keys = connection.keys("request-*")
-            serializer = RequestSerializer.new(connection)
+            serializer = RawResponseSerializer.new(connection)
             keys.each do |key|
                 requests << serializer.find(key)
             end
@@ -17,7 +17,7 @@ class RedisRequest
 
     def find(request_id)
         REDIS.with do |connection|
-            serializer = RequestSerializer.new(connection)
+            serializer = RawResponseSerializer.new(connection)
             serializer.find(request_id)
         end
     end
