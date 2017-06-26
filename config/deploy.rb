@@ -11,7 +11,7 @@ set :tmp_dir, "/home/#{fetch(:deploy_user)}/tmp"
 set :pty, true
 
 set :format, :pretty
-#set :linked_files, %w{ config/database.yml}
+set :linked_files, %w{ config/database.yml}
 set :linked_dirs, %w{ log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 set :bundle_binstubs, nil
 set :ssh_options, { :forward_agent => true }
