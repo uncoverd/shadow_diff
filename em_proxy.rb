@@ -9,7 +9,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
   conn.server :shadow, :host => ENV['SLAVE_SHADOW'], :port => 3000    # testing, internal only
 
   conn.on_data do |data|
-    @request_id = data.scan(/X-Request-Id: .*$/).first
+    @request_id = data.scan(/X-Request-Id: .*$/).first.split(":")[1].strip.gsub!(/\./, '-')
     redis.hset(@request_id, :request, data)
     redis.hset(@request_id, :time, Time.now.ctime)
     data
