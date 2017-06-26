@@ -6,6 +6,7 @@
                 <thead>
                     <tr>
                         <th>Request ID</th>
+                        <th>URL</th>
                         <th>Time</th>
                     </tr>
                 </thead> 
@@ -13,6 +14,7 @@
                 <% @requests.each do |request| %>
                     <tr>
                         <th scope="row"><%= link_to request.id, request_path(request.id) %></th>
+                        <td><%= request.url %></td>
                         <td><%= request.time %></td>
                     </tr> 
                 <% end %>

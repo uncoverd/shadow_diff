@@ -8,6 +8,7 @@ class RequestSerializer
         request.production_response = @connection.hget(key, "production")
         request.shadow_response = @connection.hget(key, "shadow")
         request.time = @connection.hget(key, "time")
+        request.url = request.production_response[/X-XHR-Current-Location(.*)$/].split(':')[1]
         request 
     end    
 

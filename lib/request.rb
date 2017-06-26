@@ -1,5 +1,5 @@
 class Request
-    attr_accessor :id, :production_response, :shadow_response, :time
+    attr_accessor :id, :production_response, :shadow_response, :time, :url
 
     def initialize(id)
         @id = id
