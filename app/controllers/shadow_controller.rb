@@ -1,5 +1,4 @@
 class ShadowController < ApplicationController
-
     def index
         redis_responses = RedisResponse.new
         @requests = redis_responses.all

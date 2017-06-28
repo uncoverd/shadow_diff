@@ -24,6 +24,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     p [:on_finish, name, Time.now - @start]
     redis.hset(@request_id, :production, @data[:production])
     redis.hset(@request_id, :shadow, @data[:shadow])
+    redis.hset(@request_id, :commit_hash, redis.get("commit_hash"))
     :close if name == :production
   end
 end

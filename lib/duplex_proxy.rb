@@ -9,6 +9,10 @@ class DuplexProxy
 
   def start(repo, commit)
     puts "STARTING PROXY"
+    Commit.find_or_create_by(commit_hash: commit)
+    REDIS.with do |conn|
+      conn.set("commit_hash", commit)
+    end  
     puts repo
     puts commit
     spawn_proxy
