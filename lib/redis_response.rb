@@ -21,4 +21,10 @@ class RedisResponse
             serializer.find(request_id)
         end
     end
+
+    def delete(request_id)
+       REDIS.with do |connection|
+            connection.del(request_id)
+        end 
+    end    
 end    

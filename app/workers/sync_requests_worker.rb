@@ -13,6 +13,7 @@ class SyncRequestsWorker
         Response.create(request_id: response.id, production: response.production_response,
                         shadow: response.shadow_response, url: response.url,
                         time: response.time, commit: commit)
+        redis_responses.delete(response.id)
     end
   end
 
