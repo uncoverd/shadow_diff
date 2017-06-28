@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">Commits</div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Commit hash</th>
+                            <th>Author</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+                     <% @commits.each do |commit| %>
+                      <tr>
+                        <td><%= commit.commit_hash %></td>
+                        <td>Jaka</td>
+                        <td><%= link_to 'Show', commit %></td>
+                        <td><%= link_to 'Edit', edit_commit_path(commit) %></td>
+                        <td><%= link_to 'Destroy', commit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+   </div>
