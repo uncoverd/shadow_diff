@@ -1,6 +1,7 @@
 class CreateResponses < ActiveRecord::Migration[5.0]
   def change
     create_table :responses do |t|
+      t.references :commit, index: true, foreign_key: true
       t.string :request_id
       t.string :url
       t.text :production

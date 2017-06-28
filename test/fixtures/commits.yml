@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  score: 1.5
+  description: MyString
+  commit_hash: MyString
+  commit_url: MyString
+
+two:
+  score: 1.5
+  description: MyString
+  commit_hash: MyString
+  commit_url: MyString

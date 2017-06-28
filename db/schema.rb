@@ -10,18 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626194448) do
+ActiveRecord::Schema.define(version: 20170628171024) do
+
+  create_table "commits", force: :cascade do |t|
+    t.float    "score"
+    t.string   "description"
+    t.string   "commit_hash"
+    t.string   "commit_url"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["commit_hash"], name: "index_commits_on_commit_hash", unique: true
+  end
 
   create_table "responses", force: :cascade do |t|
+    t.integer  "commit_id"
     t.string   "request_id"
     t.string   "url"
     t.text     "production"
     t.text     "shadow"
-    t.integer  "commit_id"
     t.datetime "time"
     t.float    "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["commit_id"], name: "index_responses_on_commit_id"
   end
 
 end

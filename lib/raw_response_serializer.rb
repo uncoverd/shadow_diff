@@ -8,8 +8,9 @@ class RawResponseSerializer
         response.production_response = @connection.hget(key, "production")
         response.shadow_response = @connection.hget(key, "shadow")
         response.time = @connection.hget(key, "time")
+        response.commit_hash = @connection.hget(key, "commit_hash")
         response.url = response.production_response[/X-XHR-Current-Location(.*)$/].split(':')[1]
         response 
     end    
 
-end    
+end
