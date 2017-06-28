@@ -9,10 +9,11 @@ class SyncRequestsWorker
     redis_responses = RedisResponse.new
     new_responses = redis_responses.all
     new_responses.each do |response|
+        commit = Commit.find_or_create_by(commit_hash: response.commit_hash)
         Response.create(request_id: response.id, production: response.production_response,
                         shadow: response.shadow_response, url: response.url,
-                        time: response.time, Commit.find_or_create_by(hash: response.commit_hash))
-    end    
+                        time: response.time, commit: commit)
+    end
   end
 
 end
