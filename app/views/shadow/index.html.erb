@@ -1,6 +1,6 @@
 <div class="container col-md-10 col-md-offset-1">
     <div class="panel panel-default">
-        <div class="panel-heading">Requests</div>
+        <div class="panel-heading">Pending requests</div>
         <div class="panel-body">
             <table class="table table-striped">
                 <thead>
@@ -11,7 +11,7 @@
                     </tr>
                 </thead> 
                 <tbody>
-                <% @requests.each do |request| %>
+                <% @pending_requests.each do |request| %>
                     <tr>
                         <th scope="row"><%= link_to request.id, request_path(request.id) %></th>
                         <td><%= request.url %></td>
@@ -20,7 +20,32 @@
                 <% end %>
                 </tbody>
             </table>
+        </div>
     </div>
-</div>
+    <% @commits.each do |commit| %>
+        <div class="panel panel-default">
+            <div class="panel-heading">Commit <%= commit.commit_hash %></div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>URL</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+                    <% @processed_requests[commit].each do |response| %>
+                        <tr>
+                            <th scope="row"><%= link_to response.request_id, request_path(response.request_id) %></th>
+                            <td><%= response.url %></td>
+                            <td><%= response.time %></td>
+                        </tr> 
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <% end %>
    
 </div>
