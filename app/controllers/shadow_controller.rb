@@ -1,12 +1,12 @@
 class ShadowController < ApplicationController
 
     def index
-        redis_requests = RedisResponse.new
-        @requests = redis_requests.all
+        redis_responses = RedisResponse.new
+        @requests = redis_responses.all
     end
 
     def show
-        redis_requests = RedisResponse.new
-        @request = redis_requests.find(params[:id])
+        redis_responses = RedisResponse.new
+        @request = redis_responses.find(params[:id])
     end      
 end
