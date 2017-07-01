@@ -33,15 +33,15 @@
                 <thead>
                     <tr>
                         <th>Request ID</th>
-                        <th>URL</th>
+                        <th>Score</th>
                         <th>Time</th>
                     </tr>
                 </thead> 
                 <tbody>
                     <%url_response.each do |response| %>
                         <tr>
-                            <th scope="row"><%= link_to response.request_id, response_path(response.id) %></th>
-                            <td><%= response.url %></td>
+                            <th class="col-md-4"><%= link_to response.request_id, response_path(response.id) %></th>
+                            <th><%= response.score %></th>
                             <td><%= response.time %></td>
                         </tr> 
                     <%end%>
