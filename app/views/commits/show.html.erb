@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <div class="container col-md-10 col-md-offset-1">
     <div class="panel panel-default">
-        <div class="panel-heading">Pending requests</div>
+        <div class="panel-heading">Pending requests <%= '(Redis offline)' if @redis_down %></div>
         <div class="panel-body">
             <table class="table table-striped">
                 <thead>

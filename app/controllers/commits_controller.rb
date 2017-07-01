@@ -10,8 +10,13 @@ class CommitsController < ApplicationController
   # GET /commits/1
   # GET /commits/1.json
   def show
-    redis_responses = RedisResponse.new
-    @pending_responses = redis_responses.all
+    begin
+      redis_responses = RedisResponse.new
+      @pending_responses = redis_responses.all
+    rescue Redis::CannotConnectError
+      @pending_responses = []
+      @redis_down = true
+    end
     @responses = Response.where(commit: @commit).group_by(&:url)
   end
 
