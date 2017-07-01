@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  modifier: 1.5
+  name: MyString
+  regex_string: MyString
+  url: one
+  commit: one
+  status: 1
+
+two:
+  modifier: 1.5
+  name: MyString
+  regex_string: MyString
+  url: two
+  commit: two
+  status: 1

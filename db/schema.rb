@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628171024) do
+ActiveRecord::Schema.define(version: 20170701140204) do
 
   create_table "commits", force: :cascade do |t|
     t.float    "score"
@@ -33,6 +33,25 @@ ActiveRecord::Schema.define(version: 20170628171024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commit_id"], name: "index_responses_on_commit_id"
+  end
+
+  create_table "rules", force: :cascade do |t|
+    t.float    "modifier"
+    t.string   "name"
+    t.string   "regex_string"
+    t.integer  "url_id"
+    t.integer  "commit_id"
+    t.integer  "status"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["commit_id"], name: "index_rules_on_commit_id"
+    t.index ["url_id"], name: "index_rules_on_url_id"
+  end
+
+  create_table "urls", force: :cascade do |t|
+    t.string   "path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

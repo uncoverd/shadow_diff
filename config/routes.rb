@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :urls
+  resources :rules
   root 'commits#index'
   resource :github_webhooks, only: :create, defaults: { formats: :json }
   get '/shadow' => 'shadow#index'

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Modifier:</strong>
+  <%= @rule.modifier %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @rule.name %>
+</p>
+
+<p>
+  <strong>Regex string:</strong>
+  <%= @rule.regex_string %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @rule.url %>
+</p>
+
+<p>
+  <strong>Commit:</strong>
+  <%= @rule.commit %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @rule.status %>
+</p>
+
+<%= link_to 'Edit', edit_rule_path(@rule) %> |
+<%= link_to 'Back', rules_path %>
