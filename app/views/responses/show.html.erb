@@ -4,11 +4,27 @@
         <div class="panel panel-default">
             <div class="panel-heading">Request <%= @response.request_id %></div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6"><%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).left.html_safe %></div>
-                    <div class="col-md-6"><%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).right.html_safe %></div>
-                </div>
+                <div class="well well-lg"><%= @response.request %></div>
+            </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Production response</div>
+                    <div class="panel-body">
+                        <%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).left.html_safe %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Shadow response</div>
+                    <div class="panel-body">
+                            <%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).right.html_safe %>
+                    </div>
+                </div>
+            </div>    
+        </div>    
     </div>
 </div>
 <%= link_to 'Edit', edit_response_path(@response) %> |
