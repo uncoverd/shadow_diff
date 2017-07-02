@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   resources :rules
   root 'commits#index'
   resource :github_webhooks, only: :create, defaults: { formats: :json }
-  get '/shadow' => 'shadow#index'
-  get '/shadow/:id' => 'shadow#show', as: 'request'
-
+  post '/request/sync' => 'commits#request_sync', as: 'request_sync'
   resources :commits
   resources :responses
 
