@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701134842) do
+ActiveRecord::Schema.define(version: 20170702103420) do
 
   create_table "commits", force: :cascade do |t|
     t.float    "score"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 20170701134842) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["commit_hash"], name: "index_commits_on_commit_hash", unique: true
+  end
+
+  create_table "comparison_results", force: :cascade do |t|
+    t.integer  "response_id"
+    t.integer  "rule_id"
+    t.integer  "index"
+    t.float    "line_score"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["response_id"], name: "index_comparison_results_on_response_id"
+    t.index ["rule_id"], name: "index_comparison_results_on_rule_id"
   end
 
   create_table "responses", force: :cascade do |t|

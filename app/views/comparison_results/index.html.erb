@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Comparison Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Response</th>
+      <th>Rule</th>
+      <th>Index</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comparison_results.each do |comparison_result| %>
+      <tr>
+        <td><%= comparison_result.response %></td>
+        <td><%= comparison_result.rule %></td>
+        <td><%= comparison_result.index %></td>
+        <td><%= link_to 'Show', comparison_result %></td>
+        <td><%= link_to 'Edit', edit_comparison_result_path(comparison_result) %></td>
+        <td><%= link_to 'Destroy', comparison_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Comparison Result', new_comparison_result_path %>

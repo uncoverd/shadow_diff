@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Response:</strong>
+  <%= @comparison_result.response %>
+</p>
+
+<p>
+  <strong>Rule:</strong>
+  <%= @comparison_result.rule %>
+</p>
+
+<p>
+  <strong>Index:</strong>
+  <%= @comparison_result.index %>
+</p>
+
+<%= link_to 'Edit', edit_comparison_result_path(@comparison_result) %> |
+<%= link_to 'Back', comparison_results_path %>

@@ -10,10 +10,13 @@ class ResponseComparator
 
     def calculate_score
         indexes = diff_indexes
+        ComparisonResult.where(response: @response).destroy_all
         @rules.each do |rule|
             indexes.each do |index|
                 puts @diff[index] + " scores " + rule.evaluate(@diff[index]).to_s
-                @score += rule.evaluate(@diff[index])
+                line_score = rule.evaluate(@diff[index])
+                @score += line_score
+                ComparisonResult.create(response: @response, rule: rule, index: index, line_score: line_score)
             end
         end
         score
@@ -26,10 +29,11 @@ class ResponseComparator
 
     def diff_indexes
         indexes = []
-        @diff = Diffy::Diff.new(@response.production, @response.shadow).each_chunk.to_a
+        @diff = Diffy::Diff.new(@response.production, @response.shadow).to_a#.each_chunk.to_a
         @diff.each_with_index do |line, index|
             if line[/^\+/] or line[/^-/]
                 indexes << index
+                puts line
             end
         end
         indexes  

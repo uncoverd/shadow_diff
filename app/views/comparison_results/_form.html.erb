@@ -1,0 +1,32 @@
+<%= form_for(comparison_result) do |f| %>
+  <% if comparison_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comparison_result.errors.count, "error") %> prohibited this comparison_result from being saved:</h2>
+
+      <ul>
+      <% comparison_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :response_id %>
+    <%= f.text_field :response_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :rule_id %>
+    <%= f.text_field :rule_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :index %>
+    <%= f.number_field :index %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

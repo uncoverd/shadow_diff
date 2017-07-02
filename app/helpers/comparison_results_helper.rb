@@ -1,0 +1,2 @@
+module ComparisonResultsHelper
+end

@@ -1,5 +1,53 @@
 <p id="notice"><%= notice %></p>
 <div class="container col-md-10 col-md-offset-1">
+    <div class="panel panel-default">
+        <div class="panel-heading">Active rules</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rule name</th>
+                    <th>Score modifier</th>
+                    <th>Regex</th>
+                </tr>
+            </thead> 
+            <tbody>
+            <% @active_rules.each do |rule| %>
+                <tr>
+                    <td><%= rule.name %></td>
+                    <td><%= rule.modifier %></td>
+                    <td><%= rule.regex_string %></td>
+                </tr> 
+            <% end %>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Applied rules</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rule name</th>
+                    <th>Line index</th>
+                    <th>Line score</th>
+                </tr>
+            </thead> 
+            <tbody>
+            <% @evaluated_results.each do |result| %>
+                <tr>
+                    <td><%= result.rule.name %></td>
+                    <td><%= result.index %></td>
+                    <td><%= result.line_score %></td>
+                </tr> 
+            <% end %>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
     <style><%= Diffy::CSS %></style>
         
         <div class="row">

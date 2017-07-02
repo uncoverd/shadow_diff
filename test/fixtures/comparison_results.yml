@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  response: one
+  rule: one
+  index: 1
+
+two:
+  response: two
+  rule: two
+  index: 1
