@@ -12,8 +12,8 @@ class SyncRequestsWorker
         commit = Commit.find_or_create_by(commit_hash: response.commit_hash)
         url = Url.find_or_create_by(path: response.url)
         Response.create(request_id: response.id, production: response.production_response,
-                        shadow: response.shadow_response, url: url,
-                        time: response.time, commit: commit, request: response.request)
+                        shadow: response.shadow_response, url: url, time: response.time,
+                        commit: commit, request: response.request, verb: response.verb)
         redis_responses.delete(response.id)
     end
   end

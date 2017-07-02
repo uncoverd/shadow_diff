@@ -10,6 +10,7 @@ class CreateResponses < ActiveRecord::Migration[5.0]
       t.datetime :time
       t.float :score
       t.text :request
+      t.string :verb
       t.timestamps
     end
   end

@@ -11,6 +11,7 @@ class RawResponseSerializer
         response.time = @connection.hget(key, "time")
         response.commit_hash = @connection.hget(key, "commit_hash")
         response.url = @connection.hget(key,"url")
+        response.verb = @connection.hget(key,"verb")
         response 
     end    
 

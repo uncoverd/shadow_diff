@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20170701134842) do
     t.datetime "time"
     t.float    "score"
     t.text     "request"
+    t.string   "verb"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commit_id"], name: "index_responses_on_commit_id"
