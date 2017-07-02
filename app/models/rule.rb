@@ -15,7 +15,7 @@ class Rule < ApplicationRecord
   private
   
   def regex
-    Regex.new(regex_string)
+    Regexp.new(Regexp.escape(regex_string))
   end 
 
 end
