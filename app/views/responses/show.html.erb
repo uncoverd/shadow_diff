@@ -14,8 +14,8 @@
             <tbody>
             <% @active_rules.each do |rule| %>
                 <tr>
-                    <td><%= rule.name %></td>
-                    <td><%= rule.modifier %></td>
+                    <td class="col-md-1"><%= rule.name %></td>
+                    <td  class="col-md-1"><%= rule.modifier %></td>
                     <td><%= rule.regex_string %></td>
                 </tr> 
             <% end %>
@@ -31,16 +31,16 @@
             <thead>
                 <tr>
                     <th>Rule name</th>
-                    <th>Line index</th>
                     <th>Line score</th>
+                    <th>Line content</th>
                 </tr>
             </thead> 
             <tbody>
             <% @evaluated_results.each do |result| %>
-                <tr>
-                    <td><%= result.rule.name %></td>
-                    <td><%= result.index %></td>
-                    <td><%= result.line_score %></td>
+                <tr class="<%= result.color %>">
+                    <td class="col-md-1"><%= result.rule.name %></td>
+                    <td class="col-md-1"><%= result.line_score %></td>
+                    <td class="col-md-5"><%= result.line[0..100] %></td>
                 </tr> 
             <% end %>
             </tbody>
@@ -71,7 +71,7 @@
     <div class="panel panel-default">
             <div class="panel-heading">Request <%= @response.request_id %></div>
             <div class="panel-body">
-                <div class="well well-lg request"><%= simple_format(@response.request) %></div>
+                <div class="well well-lg wrap_header"><%= simple_format(@response.request) %></div>
             </div>
     </div>
 </div>

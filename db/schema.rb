@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170702103420) do
   create_table "comparison_results", force: :cascade do |t|
     t.integer  "response_id"
     t.integer  "rule_id"
-    t.integer  "index"
+    t.string   "line"
     t.float    "line_score"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

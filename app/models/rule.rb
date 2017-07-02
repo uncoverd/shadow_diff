@@ -8,7 +8,7 @@ class Rule < ApplicationRecord
       if line =~ regex
           modifier
       else
-          0    
+          -1    
       end
   end
 
