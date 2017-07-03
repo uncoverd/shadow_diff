@@ -9,37 +9,52 @@ class ResponseComparator
     end
 
     def calculate_score
-        lines = changed_lines
-        ComparisonResult.where(response: @response).destroy_all
-        lines.each do |line|
-            missing_rule = true
-            @rules.each do |rule|
-                line_score = rule.evaluate(line)
-                if line_score >= 0
-                    @score += line_score
-                    ComparisonResult.create(response: @response, rule: rule, line_score: line_score, line: line)
-                    missing_rule = false
-                end    
-            end
-            if missing_rule
-                create_comparison_result(line)
-            end    
-        end
+        remove_previous_comparisons
+        checked_lines = check_affected_lines
+        check_missing_lines(changed_lines - checked_lines)
         @score
     end
 
     private
 
+    def check_affected_lines
+        affected_lines = []
+        @rules.each do |rule|
+            rule_evaluator = RuleEvaluator.new(rule)
+            rule_score, lines = rule_evaluator.evaluate(changed_lines)
+            if rule_score >= 0
+                affected_lines += lines
+                @score += rule_score
+                ComparisonResult.create(response: @response, rule: rule, line_score: rule_score, line: lines.join("|||"))
+                missing_rule = false
+            end
+        end
+        affected_lines
+    end
+
+    def check_missing_lines(remaining_lines)
+        remaining_lines.each do |line|
+            create_comparison_result(line)
+        end
+    end    
+
+    def remove_previous_comparisons
+        ComparisonResult.where(response: @response).destroy_all
+    end    
+
     def create_comparison_result(line)
         name = ''
         if line[0] == '+'
+            action = :add
             name = 'Added'
         else
+            action = :remove
             name = 'Removed'
         end        
-        rule = Rule.create(modifier: Rule.missing_modifier, name: name, regex_string: "", url: @response.url, commit: @response.commit, status: :missing)
-        ComparisonResult.create(response: @response, rule: rule, line_score: Rule.missing_modifier, line: line)
-        @score += Rule.missing_modifier
+        rule = Rule.create( modifier: Rule.missing_modifier, name: name, regex_string: "", url: @response.url,
+                            commit: @response.commit, status: :missing, action: action)
+        ComparisonResult.create(response: @response, rule: rule, line_score: rule.modifier, line: line)
+        @score += rule.modifier
     end    
 
     def changed_lines
