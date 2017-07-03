@@ -1,4 +1,4 @@
-class RedisResponse
+class RedisConnection
     def initialize
     end
 

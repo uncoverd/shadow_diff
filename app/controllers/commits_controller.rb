@@ -11,8 +11,8 @@ class CommitsController < ApplicationController
   # GET /commits/1.json
   def show
     begin
-      redis_responses = RedisResponse.new
-      @pending_responses = redis_responses.all
+      redis_connection = RedisConnection.new
+      @pending_responses = redis_connection.all
     rescue Redis::CannotConnectError
       @pending_responses = []
       @redis_down = true

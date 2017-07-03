@@ -6,8 +6,8 @@ class SyncRequestsWorker
   end
 
   def perform
-    redis_responses = RedisResponse.new
-    new_responses = redis_responses.all
+    redis_connection = RedisConnection.new
+    new_responses = redis_connection.all
     new_responses.each do |response|
         commit = Commit.find_or_create_by(commit_hash: response.commit_hash)
         url = Url.find_or_create_by(path: response.url)
@@ -18,7 +18,7 @@ class SyncRequestsWorker
           Rule.find_or_create_by(modifier: 0, name: name, regex_string: regex, url: url,
                                  commit: commit, status: :active, action: :change)
         end  
-        redis_responses.delete(response.id)
+        redis_connection.delete(response.id)
     end
     Commit.last.update_scores
   end

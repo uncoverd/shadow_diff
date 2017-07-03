@@ -9,17 +9,17 @@
 workers Integer(ENV['PUMA_WORKERS'] || 1)
 threads Integer(ENV['MIN_THREADS']  || 0), Integer(ENV['MAX_THREADS'] || 8)
 
-daemonize
-daemonize true
+#daemonize
+#daemonize true
 pidfile 'tmp/pids/puma.pid'
 
 rackup      DefaultRackup
 port        ENV['PORT']     || 3000
-environment ENV['RACK_ENV'] || 'development'
+environment ENV.fetch("RAILS_ENV") { "development" }
 
-stdout_redirect '/home/deploy/shadow_diff/shared/log/puma_stdout', '/home/deploy/shadow_diff/shared/log/puma_stderr', true
+#stdout_redirect '/home/deploy/shadow_diff/shared/log/puma_stdout', '/home/deploy/shadow_diff/shared/log/puma_stderr', true
+#prune_bundler
 
-prune_bundler
 #on_worker_boot do
 #  # worker specific setup
 #  ActiveSupport.on_load(:active_record) do
