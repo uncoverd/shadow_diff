@@ -15,17 +15,17 @@ class ResponseComparator
             missing_rule = true
             @rules.each do |rule|
                 line_score = rule.evaluate(line)
-                @score += line_score
                 if line_score >= 0
+                    @score += line_score
                     ComparisonResult.create(response: @response, rule: rule, line_score: line_score, line: line)
                     missing_rule = false
                 end    
             end
             if missing_rule
-                @score += create_comparison_result(line).line_score
+                create_comparison_result(line)
             end    
         end
-        score
+        @score
     end
 
     private
@@ -37,8 +37,9 @@ class ResponseComparator
         else
             name = 'Removed'
         end        
-        rule = Rule.create(modifier: -1, name: name, regex_string: "", url: @response.url, commit: @response.commit, status: :missing)
-        ComparisonResult.create(response: @response, rule: rule, line_score: -1, line: line)
+        rule = Rule.create(modifier: Rule.missing_modifier, name: name, regex_string: "", url: @response.url, commit: @response.commit, status: :missing)
+        ComparisonResult.create(response: @response, rule: rule, line_score: Rule.missing_modifier, line: line)
+        @score += Rule.missing_modifier
     end    
 
     def changed_lines

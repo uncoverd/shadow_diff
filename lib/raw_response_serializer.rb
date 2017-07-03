@@ -4,7 +4,7 @@ class RawResponseSerializer
     end
 
     def find (key)
-        raw_response = RawResponse.new(key).tap do |obj|
+        raw_response = RawResponse.new(key).tap do |response|
             response.production_response = @connection.hget(key, "production")
             response.shadow_response = @connection.hget(key, "shadow")
             response.request = @connection.hget(key, "request")
