@@ -6,4 +6,8 @@ class ComparisonResult < ApplicationRecord
     line_score >= 0 ? "success" : "danger"
   end
 
+  def display_line
+    line.split('|||')
+  end  
+
 end
