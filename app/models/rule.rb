@@ -5,7 +5,7 @@ class Rule < ApplicationRecord
   enum status: [:active, :disabled]
 
   def evaluate(line)
-      if line =~ regex
+      if line[regex]
           modifier
       else
           -1    
@@ -15,7 +15,7 @@ class Rule < ApplicationRecord
   private
   
   def regex
-    Regexp.new(Regexp.escape(regex_string))
+    Regexp.new(regex_string)
   end 
 
 end

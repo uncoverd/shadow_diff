@@ -33,7 +33,13 @@ class ResponseComparator
     private
 
     def create_missing_result(line)
-        rule = Rule.create(modifier: -1, name: "Missing", regex_string: line, url: @response.url, commit: @response.commit)
+        name = ''
+        if line[0] == '+'
+            name = 'Added'
+        else
+            name = 'Removed'
+        end        
+        rule = Rule.create(modifier: -1, name: name, regex_string: line, url: @response.url, commit: @response.commit)
         ComparisonResult.create(response: @response, rule: rule,
                                         line_score: -1, line: line)
     end    
@@ -42,7 +48,7 @@ class ResponseComparator
         indexes = []
         @diff = Diffy::Diff.new(@response.production, @response.shadow).to_a#.each_chunk.to_a
         @diff.each_with_index do |line, index|
-            if line[/^\+/] #or line[/^-/]
+            if line[/^\+/] or line[/^-/]
                 indexes << [index,line]
             end
         end
