@@ -2,7 +2,7 @@ class Rule < ApplicationRecord
   belongs_to :url
   belongs_to :commit
 
-  enum status: [:active, :disabled]
+  enum status: [:active, :missing, :default]
 
   def evaluate(line)
       if line[regex]

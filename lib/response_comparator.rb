@@ -22,7 +22,7 @@ class ResponseComparator
                 end    
             end
             if missing_rule
-                create_comparison_result(line)
+                @score += create_comparison_result(line).line_score
             end    
         end
         score
@@ -37,7 +37,7 @@ class ResponseComparator
         else
             name = 'Removed'
         end        
-        rule = Rule.create(modifier: -1, name: name, regex_string: line, url: @response.url, commit: @response.commit)
+        rule = Rule.create(modifier: -1, name: name, regex_string: "", url: @response.url, commit: @response.commit, status: :missing)
         ComparisonResult.create(response: @response, rule: rule, line_score: -1, line: line)
     end    
 
