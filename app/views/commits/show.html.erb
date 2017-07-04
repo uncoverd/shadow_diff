@@ -39,7 +39,7 @@
                 </thead> 
                 <tbody>
                     <%url_response.each do |response| %>
-                        <tr>
+                        <tr class="<%= response.color %>">
                             <th class="col-md-4"><%= link_to response.request_id, response_path(response.id) %></th>
                             <th><%= response.score %></th>
                             <td><%= response.time %></td>
