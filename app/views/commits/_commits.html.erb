@@ -1,0 +1,23 @@
+<div class="box-body no-padding">
+    <table class="table table-striped">
+        <tbody><tr>
+            <th style="width: 120px">Commit hash</th>
+            <th>Commit name</th>
+            <th>Progress</th>
+            <th style="width: 80px">Score</th>
+        </tr>
+        <% commits.each do |commit| %>
+                <tr>
+                    <td><%= commit.commit_hash[0..7] %></td>
+                    <td><%= link_to 'Add rule types for changing, adding and removing.', commit %></td>
+                    <td>
+                    <div class="progress progress-xs progress-striped active">
+                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                    </div>
+                    </td>
+                    <td><span class="badge bg-green">10%</span></td>
+                </tr>
+        <% end %>
+        </tbody>
+    </table>
+</div>

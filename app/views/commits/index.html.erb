@@ -1,31 +1,44 @@
 <p id="notice"><%= notice %></p>
 
-<div class="container col-md-10 col-md-offset-1">
-        <div class="panel panel-default">
-            <div class="panel-heading">Commits  <%= link_to "(sync requests)", request_sync_path(), :method=> :post %></div>
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Commit hash</th>
-                            <th>Author</th>
-                            <th>Score</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead> 
-                    <tbody>
-                     <% @commits.each do |commit| %>
-                      <tr>
-                        <td><%= commit.commit_hash %></td>
-                        <td>Jaka</td>
-                        <td><%= commit.score %></td>
-                        <td><%= link_to 'Show', commit %></td>
-                        <td><%= link_to 'Destroy', commit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                      </tr>
-                    <% end %>
-                    </tbody>
-                </table>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+        Index
+        <small><%= link_to "(sync requests)", request_sync_path(), :method=> :post %></small>
+        </h1>
+        <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+        </ol>
+    </section>
+
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">Active commits</h3>
+                    </div>
+                    <%= render partial: "commits", object: @commits %>
+                    <!-- /.box-body -->
+                </div>
             </div>
         </div>
-   </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Past commits</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <%= render partial: "commits", object: @commits %>
+                </div>
+            </div>
+        </div>
+
+    
+    </section>
+</div>
