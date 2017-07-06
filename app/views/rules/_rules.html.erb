@@ -1,0 +1,19 @@
+<div class="box-body no-padding">
+    <table class="table table-striped">
+        <tbody><tr>
+            <th>Rule name</th>
+            <th>Rule action</th>
+            <th>Score modifier</th>
+            <th>Regex</th>
+        </tr>
+        <% rules.each do |rule| %>
+            <tr>
+                <td class="col-md-1"><%= rule.name %></td>
+                <td class="col-md-1"><%= rule.action %></td>
+                <td  class="col-md-1"><%= rule.modifier %></td>
+                <td><%= rule.regex_string %></td>
+            </tr> 
+        <% end %>
+        </tbody>
+    </table>
+</div>

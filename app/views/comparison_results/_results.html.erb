@@ -1,0 +1,24 @@
+<div class="box-body no-padding">
+    <table class="table table-striped wrapped_element">
+        <tbody><tr>
+            <th>Rule name</th>
+            <th>Rule action</th>
+            <th>Line score</th>
+            <th>Line content</th>
+        </tr>
+        <% results.each do |result| %>
+                <tr class="<%= result.color %>">
+                    <td class="col-md-1"><%= result.rule.name %></td>
+                    <td class="col-md-1"><%= result.rule.action %></td>
+                    <td class="col-md-1"><%= result.line_score %></td>
+                    <td>
+                        <% result.display_line.each do |line| %>
+                            <%= line %>
+                            </br>
+                        <% end %>
+                    </td>
+                </tr> 
+            <% end %>
+        </tbody>
+    </table>
+</div>

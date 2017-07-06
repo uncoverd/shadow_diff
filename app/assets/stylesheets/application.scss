@@ -4,6 +4,6 @@
 @import "skin-blue";
 @import "font-awesome";
 @import "ionicons";
-.wrap_header {
-    overflow-wrap: break-word;
+.wrapped_element {
+    word-break: break-word;
 }

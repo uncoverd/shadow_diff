@@ -1,88 +1,73 @@
 <p id="notice"><%= notice %></p>
-<div class="container col-md-10 col-md-offset-1">
-    <div class="panel panel-default">
-        <div class="panel-heading">Active rules</div>
-        <div class="panel-body">
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Rule name</th>
-                    <th>Rule action</th>
-                    <th>Score modifier</th>
-                    <th>Regex</th>
-                </tr>
-            </thead> 
-            <tbody>
-            <% @active_rules.each do |rule| %>
-                <tr>
-                    <td class="col-md-1"><%= rule.name %></td>
-                    <td class="col-md-1"><%= rule.action %></td>
-                    <td  class="col-md-1"><%= rule.modifier %></td>
-                    <td><%= rule.regex_string %></td>
-                </tr> 
-            <% end %>
-            </tbody>
-        </table>
-        </div>
-    </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Applied rules</div>
-        <div class="panel-body">
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Rule name</th>
-                    <th>Rule action</th>
-                    <th>Line score</th>
-                    <th>Line content</th>
-                </tr>
-            </thead> 
-            <tbody>
-            <% @evaluated_results.each do |result| %>
-                <tr class="<%= result.color %>">
-                    <td class="col-md-1"><%= result.rule.name %></td>
-                    <td class="col-md-1"><%= result.rule.action %></td>
-                    <td class="col-md-1"><%= result.line_score %></td>
-                    <td class="col-md-5">
-                        <% result.display_line.each do |line| %>
-                            <%= line %>
-                            </br>
-                        <% end %>
-                    </td>
-                </tr> 
-            <% end %>
-            </tbody>
-        </table>
-        </div>
-    </div>
 
-    <style><%= Diffy::CSS %></style>
-        
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+        Response for <%= @response.url.path %>
+        </h1>
+        <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+        </ol>
+    </section>
+
+
+    <section class="content">
         <div class="row">
             <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Production response</div>
-                    <div class="panel-body">
-                        <%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).left.html_safe %>
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">Active rules</h3>
                     </div>
+                    <%= render partial: "rules/rules", object: @active_rules %>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Shadow response</div>
-                    <div class="panel-body">
-                            <%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).right.html_safe %>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Applied rules</h3>
                     </div>
+                    <%= render partial: "comparison_results/results", object: @evaluated_results %>
                 </div>
-            </div>    
-        </div>    
-    <div class="panel panel-default">
-            <div class="panel-heading">Request <%= @response.request_id %></div>
-            <div class="panel-body">
-                <div class="well well-lg wrap_header"><%= simple_format(@response.request) %></div>
             </div>
-    </div>
+        </div>
+        <style><%= Diffy::CSS %></style>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Production response</h3>
+                    </div>
+                    <%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).left.html_safe %>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Shadow response</h3>
+                    </div>
+                     <%= Diffy::SplitDiff.new(@response.production, @response.shadow, :format => :html).right.html_safe %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box wrapped_element">
+                    <div class="box-header">
+                        <h3 class="box-title">Request <%= @response.request_id %></h3>
+                    </div>
+                    <%= simple_format(@response.request) %>
+                </div>
+            </div>
+        </div>
+
+    </section>
 </div>
-<%= link_to 'Edit', edit_response_path(@response) %> |
-<%= link_to 'Back', responses_path %>
+
