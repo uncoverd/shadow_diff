@@ -3,6 +3,6 @@ class Response < ApplicationRecord
     belongs_to :url
 
     def color
-        score >= 0 ? "success" : "danger"
+        score >= 0 ? "green" : "red"
     end
 end

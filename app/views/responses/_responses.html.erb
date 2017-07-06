@@ -1,15 +1,17 @@
 <div class="box-body no-padding">
     <table class="table table-striped">
         <tbody><tr>
+            <th>URL</th>
             <th>Request ID</th>
             <th>Time</th>
             <th>Score</th>
         </tr>
         <%responses.each do |response| %>
-                <tr class="<%= response.color %>">
+                <tr>
+                    <td><%= response.url.path %></td>
                     <td><%= link_to response.request_id, response_path(response.id) %></td>
-                    <td><%= response.time %></td>                    
-                    <td><span class="badge bg-<%= response.commit.score_color %>"><%= response.score %></span></td>
+                    <td><%= response.time.to_formatted_s(:short) %></td>                    
+                    <td><span class="badge bg-<%= response.color %>"><%= response.score %></span></td>
                 </tr>
         <% end %>
         </tbody>

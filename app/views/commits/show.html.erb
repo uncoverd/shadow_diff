@@ -4,7 +4,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-        Commit
+        Captured requests
         <small><%= @commit.short_hash %></small>
         </h1>
         <ol class="breadcrumb">
@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <div class="box box-warning">
                     <div class="box-header">
-                        <h3 class="box-title">Pending requests</h3>
+                        <h3 class="box-title">Pending requests <small><%= '(Redis offline)' if @redis_down %></small></h3>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -30,13 +30,9 @@
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Captured requests</h3>
+                        <h3 class="box-title">Evaluated requests</h3>
                     </div>
-
-                    <% @responses.each do |url, response_group|%>
-                        <%= render partial: "responses", object: response_group %>
-                    <% end %>
-
+                    <%= render partial: "responses/responses", object: @responses %>
                 </div>
             </div>
         </div>
