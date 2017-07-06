@@ -1,5 +1,6 @@
 class Commit < ApplicationRecord
     has_many :responses
+    MIN_NUMBER_RESPONSES = 10
 
     def update_scores
         Rule.where(status: :missing).destroy_all
@@ -10,5 +11,21 @@ class Commit < ApplicationRecord
         end
         self.score = responses.inject(0){|sum,x| sum + x.score }
         self.save
-    end     
+    end
+
+    def short_hash
+        commit_hash[0..7]
+    end    
+
+    def completion_color
+        completion_ratio >= 100 ? 'sucess' : 'warning'
+    end
+
+    def score_color
+        score >= 0 ? "green" : "red"
+    end
+
+    def completion_ratio
+        (responses.count.to_f/MIN_NUMBER_RESPONSES) * 100
+    end         
 end

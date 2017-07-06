@@ -1,57 +1,45 @@
 <p id="notice"><%= notice %></p>
-<div class="container col-md-10 col-md-offset-1">
-    <div class="panel panel-default">
-        <div class="panel-heading">Pending requests <%= '(Redis offline)' if @redis_down %></div>
-        <div class="panel-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Request ID</th>
-                        <th>URL</th>
-                        <th>Time</th>
-                    </tr>
-                </thead> 
-                <tbody>
-                <% @pending_responses.each do |request| %>
-                    <tr>
-                        <th scope="row"><%= link_to request.id, request_path(request.id) %></th>
-                        <td><%= request.url %></td>
-                        <td><%= request.time %></td>
-                    </tr> 
-                <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
-<% @responses.each_pair do |url, url_response|%>
-    <div class="panel panel-default">
-        <div class="panel-heading"><a data-toggle="collapse" href="#collapse<%= @responses.keys.index(url) %>">Responses for URL <%= url.path %></a></div>
-        <div id="collapse<%= @responses.keys.index(url) %>" class="panel-body panel-collapse collapse in">
-        <div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Request ID</th>
-                        <th>Score</th>
-                        <th>Time</th>
-                    </tr>
-                </thead> 
-                <tbody>
-                    <%url_response.each do |response| %>
-                        <tr class="<%= response.color %>">
-                            <th class="col-md-4"><%= link_to response.request_id, response_path(response.id) %></th>
-                            <th><%= response.score %></th>
-                            <td><%= response.time %></td>
-                        </tr> 
-                    <%end%>
-                </tbody>
-            </table>
-        </div>
-            
-        </div>
-    </div>
-<% end %>
 
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+        Commit
+        <small><%= @commit.short_hash %></small>
+        </h1>
+        <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+        </ol>
+    </section>
+
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">Pending requests</h3>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Captured requests</h3>
+                    </div>
+
+                    <% @responses.each do |url, response_group|%>
+                        <%= render partial: "responses", object: response_group %>
+                    <% end %>
+
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 

@@ -1,0 +1,17 @@
+<div class="box-body no-padding">
+    <table class="table table-striped">
+        <tbody><tr>
+            <th>Request ID</th>
+            <th>Time</th>
+            <th>Score</th>
+        </tr>
+        <%responses.each do |response| %>
+                <tr class="<%= response.color %>">
+                    <td><%= link_to response.request_id, response_path(response.id) %></td>
+                    <td><%= response.time %></td>                    
+                    <td><span class="badge bg-<%= response.commit.score_color %>"><%= response.score %></span></td>
+                </tr>
+        <% end %>
+        </tbody>
+    </table>
+</div>

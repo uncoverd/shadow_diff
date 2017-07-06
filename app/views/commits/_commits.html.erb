@@ -8,14 +8,14 @@
         </tr>
         <% commits.each do |commit| %>
                 <tr>
-                    <td><%= commit.commit_hash[0..7] %></td>
+                    <td><%= commit.short_hash %></td>
                     <td><%= link_to 'Add rule types for changing, adding and removing.', commit %></td>
                     <td>
                     <div class="progress progress-xs progress-striped active">
-                        <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                        <div class="progress-bar progress-bar-<%= commit.completion_color %>" style="width: <%= commit.completion_ratio %>%"></div>
                     </div>
                     </td>
-                    <td><span class="badge bg-green">10%</span></td>
+                    <td><span class="badge bg-<%= commit.score_color %>"><%= commit.score %></span></td>
                 </tr>
         <% end %>
         </tbody>
