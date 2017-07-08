@@ -3,6 +3,11 @@ class Rule < ApplicationRecord
   belongs_to :commit
   belongs_to :response
 
+  validates :name, presence: true
+  validates :regex_string, presence: true
+  validates :modifier, numericality: true
+
+
   enum status: [:active, :missing, :default]
   enum action: [:modify, :add, :remove]
 

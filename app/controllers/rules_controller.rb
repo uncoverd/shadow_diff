@@ -14,7 +14,9 @@ class RulesController < ApplicationController
 
   # GET /rules/new
   def new
-    @rule = Rule.new(commit: Commit.find(params[:commit_id]), url: Url.find(params[:url_id]), status: :active)
+    response = Response.find(params[:response_id])
+    @rule = Rule.new(commit: response.commit, url: response.url,
+                      response: response, status: :active)
   end
 
   # GET /rules/1/edit
@@ -28,6 +30,7 @@ class RulesController < ApplicationController
 
     respond_to do |format|
       if @rule.save
+        @rule.response.commit.update_scores
         format.html { redirect_to response_path(@rule.response), notice: 'Rule was successfully created.' }
         format.json { render :show, status: :created, location: @rule }
       else
@@ -69,6 +72,6 @@ class RulesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rule_params
-      params.require(:rule).permit(:modifier, :name, :regex_string, :url_id, :commit_id, :status)
+      params.require(:rule).permit(:modifier, :name, :regex_string, :url_id, :commit_id, :response_id, :action, :status)
     end
 end

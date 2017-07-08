@@ -1,42 +1,60 @@
-<%= form_for(rule) do |f| %>
+
+
+<%= form_for(rule, :html => {:class => 'form-horizontal'}) do |f| %>
   <% if rule.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(rule.errors.count, "error") %> prohibited this rule from being saved:</h2>
-
+    <div class="alert alert-warning alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-ban"></i> Validation error!</h4>
+      <%= pluralize(rule.errors.count, "error") %> prohibited this rule from being saved.
       <ul>
       <% rule.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
+    </div>
   <% end %>
-
   
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name, :class => "control-label col-sm-3" %>
+    <div class="col-sm-8">
+      <%= f.text_field :name, :class => "form-control ", :placeholder => "Enter rule name" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :action %>
-    <%= f.text_field :action %>
+  <div class="form-group">
+    <%= f.label :action, :class => "control-label col-sm-3"%>
+        <div class="col-sm-4">
+          <%= f.select(:action, Rule.actions.keys, {}, { :class => 'form-control' }) %>
+          <span class="help-block">Choose if the regex result can be modified, added or removed in the shadow response.</span>
+
+        </div>
   </div>
 
-  <div class="field">
-    <%= f.label :modifier %>
-    <%= f.text_field :modifier %>
+  <div class="form-group">
+    <%= f.label :modifier, :class => "control-label col-sm-3" %>
+        <div class="col-sm-8">
+          <%= f.text_field :modifier, :class => "form-control", :placeholder => "Enter rule modifier" %>
+          <span class="help-block">Set to zero if you wish to ignore the regex result.</span>
+      </div>
   </div>
 
-  <div class="field">
-    <%= f.label :regex_string %>
-    <%= f.text_field :regex_string %>
+  <div class="form-group">
+    <%= f.label :regex_string, :class => "control-label col-sm-3" %>
+        <div class="col-sm-8">
+          <%= f.text_field :regex_string, :class => "form-control", :placeholder => "Enter rule regex" %>
+          <span class="help-block">Choose a valid Ruby regex expression.</span>
+        </div>
   </div>
 
   <%= f.hidden_field :url_id %>
   <%= f.hidden_field :commit_id %>
+  <%= f.hidden_field :response_id %>
+
   <%= f.hidden_field :status %>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="actions box-footer">
+    <%= f.submit "Add rule", :class => "btn btn-info pull-right" %>
   </div>
 <% end %>

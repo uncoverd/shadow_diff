@@ -6,7 +6,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-        Add new rule for URL <%= @rule.url.path %>
+        Add new evaluation rule for URL <%= @rule.url.path %>
         </h1>
         <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -20,9 +20,12 @@
             <div class="col-md-6">
                 <div class="box box-warning">
                     <div class="box-header">
-                        <h3 class="box-title">Add new rule</h3>
+                        <h3 class="box-title">Rule information</h3>
                     </div>
-                    <%= render 'form', rule: @rule %>
+                    <div class="box-body no-padding">
+
+                        <%= render 'form', rule: @rule %>
+                    </div>
                 </div>
             </div>
         </div>
