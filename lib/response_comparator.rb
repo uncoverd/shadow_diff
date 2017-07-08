@@ -51,8 +51,8 @@ class ResponseComparator
             action = :remove
             name = 'Removed'
         end        
-        rule = Rule.create( modifier: Rule.missing_modifier, name: name, regex_string: "", url: @response.url,
-                            commit: @response.commit, status: :missing, action: action)
+        rule = Rule.create( modifier: Rule.missing_modifier, name: name, regex_string: "(?=a)b", url: @response.url,
+                            commit: @response.commit, status: :missing, action: action, response: @response)  
         ComparisonResult.create(response: @response, rule: rule, line_score: rule.modifier, line: line)
         @score += rule.modifier
     end    

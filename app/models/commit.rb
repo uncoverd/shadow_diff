@@ -5,7 +5,7 @@ class Commit < ApplicationRecord
     def update_scores
         Rule.where(status: :missing).destroy_all
         responses.each do |response|
-            comparator = ResponseComparator.new(response, Rule.where(commit: self, url: response.url, status: :active))
+            comparator = ResponseComparator.new(response, response.rules.where(status: :active))
             response.score = comparator.calculate_score
             response.save
         end
