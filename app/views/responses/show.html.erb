@@ -57,12 +57,12 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="box wrapped_element">
                     <div class="box-header">
-                        <h3 class="box-title">Request <%= @response.request_id %></h3>
+                        <h3 class="box-title">User request</h3>
                     </div>
-                    <%= simple_format(@response.request) %>
+                        <%= simple_format(@response.request, { class: 'full_request wrapped_element'}, wrapper_tag: "div") %>
                 </div>
             </div>
         </div>
