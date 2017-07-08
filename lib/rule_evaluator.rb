@@ -6,11 +6,11 @@ class RuleEvaluator
 
     PREFIXES = {  'add' => ['\+'],
                 'remove' => ['\-'],
-                'change' => ['\+','\-']}
+                'modify' => ['\+','\-']}
 
     LINE_CHANGES = {'add' => 1,
                     'remove' => 1,
-                    'change' => 2}
+                    'modify' => 2}
 
   def evaluate(lines)
     detected_prefixes = []

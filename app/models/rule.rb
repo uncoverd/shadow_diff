@@ -3,7 +3,7 @@ class Rule < ApplicationRecord
   belongs_to :commit
 
   enum status: [:active, :missing, :default]
-  enum action: [:change, :add, :remove]
+  enum action: [:modify, :add, :remove]
 
   def self.default_regexes
     [['ETag', 'ETag'], ['Set-Cookie', 'SetCookie'], ['X-Runtime', 'X-Runtime'], ['<meta content=(.)* name="csrf-token" />', "CSRF token"]]
