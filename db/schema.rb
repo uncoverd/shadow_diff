@@ -55,11 +55,13 @@ ActiveRecord::Schema.define(version: 20170702103420) do
     t.string   "regex_string"
     t.integer  "url_id"
     t.integer  "commit_id"
+    t.integer  "response_id"
     t.integer  "status"
     t.integer  "action"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["commit_id"], name: "index_rules_on_commit_id"
+    t.index ["response_id"], name: "index_rules_on_response_id"
     t.index ["url_id"], name: "index_rules_on_url_id"
   end
 

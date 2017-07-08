@@ -16,7 +16,7 @@ class SyncRequestsWorker
                         commit: commit, request: response.request, verb: response.verb)
         Rule.default_regexes.each do |regex, name|
           Rule.find_or_create_by(modifier: 0, name: name, regex_string: regex, url: url,
-                                 commit: commit, status: :active, action: :change)
+                                 commit: commit, status: :active, action: :modify)
         end  
         redis_connection.delete(response.id)
     end

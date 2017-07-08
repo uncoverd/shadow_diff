@@ -9,7 +9,7 @@
         <% commits.each do |commit| %>
                 <tr>
                     <td><%= commit.short_hash %></td>
-                    <td><%= link_to 'Add rule types for changing, adding and removing.', commit %></td>
+                    <td><%= link_to commit.description, commit %></td>
                     <td>
                     <div class="progress progress-xs progress-striped active">
                         <div class="progress-bar progress-bar-<%= commit.completion_color %>" style="width: <%= commit.completion_ratio %>%"></div>

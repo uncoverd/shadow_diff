@@ -1,6 +1,7 @@
 class Rule < ApplicationRecord
   belongs_to :url
   belongs_to :commit
+  belongs_to :response
 
   enum status: [:active, :missing, :default]
   enum action: [:modify, :add, :remove]

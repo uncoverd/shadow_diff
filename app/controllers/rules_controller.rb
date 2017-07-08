@@ -14,7 +14,7 @@ class RulesController < ApplicationController
 
   # GET /rules/new
   def new
-    @rule = Rule.new
+    @rule = Rule.new(commit: Commit.find(params[:commit_id]), url: Url.find(params[:url_id]), status: :active)
   end
 
   # GET /rules/1/edit
@@ -28,7 +28,7 @@ class RulesController < ApplicationController
 
     respond_to do |format|
       if @rule.save
-        format.html { redirect_to @rule, notice: 'Rule was successfully created.' }
+        format.html { redirect_to response_path(@rule.response), notice: 'Rule was successfully created.' }
         format.json { render :show, status: :created, location: @rule }
       else
         format.html { render :new }

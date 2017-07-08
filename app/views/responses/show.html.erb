@@ -20,9 +20,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Active rules</h3>
                         <div class="box-tools pull-right">
-                        <!-- Buttons, labels, and many other things can be placed here! -->
-                        <!-- Here is a label for example -->
-                        <span class="label label-primary">Label</span>
+                            <%= link_to 'Add rule', new_rule_path(commit_id: @response.commit_id, url_id: @response.url.id), :class => "btn btn-block btn-sm btn-info" %>
                     </div>
                     </div>
                     <%= render partial: "rules/rules", object: @active_rules %>

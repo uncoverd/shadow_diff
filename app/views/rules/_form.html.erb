@@ -11,14 +11,20 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :modifier %>
-    <%= f.text_field :modifier %>
-  </div>
-
+  
   <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :action %>
+    <%= f.text_field :action %>
+  </div>
+
+  <div class="field">
+    <%= f.label :modifier %>
+    <%= f.text_field :modifier %>
   </div>
 
   <div class="field">
@@ -26,20 +32,9 @@
     <%= f.text_field :regex_string %>
   </div>
 
-  <div class="field">
-    <%= f.label :url_id %>
-    <%= f.text_field :url_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :commit_id %>
-    <%= f.text_field :commit_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.number_field :status %>
-  </div>
+  <%= f.hidden_field :url_id %>
+  <%= f.hidden_field :commit_id %>
+  <%= f.hidden_field :status %>
 
   <div class="actions">
     <%= f.submit %>
