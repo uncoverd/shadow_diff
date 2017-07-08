@@ -4,7 +4,7 @@
             <th style="width: 120px">Commit hash</th>
             <th>Commit name</th>
             <th>Progress</th>
-            <th style="width: 80px">Score</th>
+            <th style="width: 80px">Status</th>
         </tr>
         <% commits.each do |commit| %>
                 <tr>
@@ -15,7 +15,7 @@
                         <div class="progress-bar progress-bar-<%= commit.completion_color %>" style="width: <%= commit.completion_ratio %>%"></div>
                     </div>
                     </td>
-                    <td><span class="badge bg-<%= commit.score_color %>"><%= commit.score %></span></td>
+                    <td> <span class="glyphicon glyphicon-<%= commit.score_icon %> fa-lg"></span></td>
                 </tr>
         <% end %>
         </tbody>

@@ -21,9 +21,11 @@ class Commit < ApplicationRecord
         completion_ratio >= 100 ? 'sucess' : 'warning'
     end
 
-    def score_color
-        score >= 0 ? "green" : "red"
+    def score_icon
+        score >= 0 ? 'ok text-success' : 'remove text-danger'
     end
+
+    
 
     def completion_ratio
         (responses.count.to_f/MIN_NUMBER_RESPONSES) * 100
