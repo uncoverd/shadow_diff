@@ -11,7 +11,7 @@ class ResponsesController < ApplicationController
   # GET /responses/1.json
   def show
     @active_rules = Rule.where(commit: @response.commit, url: @response.url, modifier: 0..Float::INFINITY)
-    @evaluated_results = ComparisonResult.where(response: @response).order(line_score: :desc)
+    @evaluated_results = ComparisonResult.includes(:rule).where(response: @response).order(line_score: :desc)
   end
 
   # GET /responses/new
