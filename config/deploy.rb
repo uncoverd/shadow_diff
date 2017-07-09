@@ -17,6 +17,8 @@ set :bundle_binstubs, nil
 set :ssh_options, { :forward_agent => true }
 
 after :deploy, :phase_restart_application
+after :deploy, :restart_workers
+
 
 
 
