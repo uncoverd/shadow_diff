@@ -10,6 +10,8 @@ class SyncRequestsWorker
     new_responses = redis_connection.all
     new_responses.each do |response|
         if response.url.include?("assets")
+            
+        else
           commit = Commit.find_or_create_by(commit_hash: response.commit_hash)
           commit.score = 0
           commit.save
@@ -20,9 +22,7 @@ class SyncRequestsWorker
           Rule.default_regexes.each do |regex, name|
             Rule.find_or_create_by(modifier: 0, name: name, regex_string: regex, url: url,
                                   commit: commit, status: :active, action: :modify, response: db_response)
-          end  
-        else
-
+          end
         end    
         #redis_connection.delete(response.id)
     end
