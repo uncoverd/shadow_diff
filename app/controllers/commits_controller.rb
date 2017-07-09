@@ -70,9 +70,7 @@ class CommitsController < ApplicationController
   end
 
   def request_sync
-    #TODO remove
-    worker = SyncRequestsWorker.new
-    worker.perform
+    SyncRequestsWorker.perform_async
     respond_to do |format|
       format.html { redirect_to commits_url, notice: 'Requests sync initiated.' }
     end
