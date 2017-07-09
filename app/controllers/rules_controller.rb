@@ -57,9 +57,12 @@ class RulesController < ApplicationController
   # DELETE /rules/1
   # DELETE /rules/1.json
   def destroy
+    response = @rule.response
+    @rule.comparison_results.destroy_all
     @rule.destroy
+    response.commit.update_scores
     respond_to do |format|
-      format.html { redirect_to rules_url, notice: 'Rule was successfully destroyed.' }
+      format.html { redirect_to response_path(response), notice: 'Rule was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

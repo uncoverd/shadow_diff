@@ -5,6 +5,7 @@
             <th>Rule action</th>
             <th>Score modifier</th>
             <th>Regex</th>
+            <th><%= link_to 'Add rule', new_rule_path(@response.id), :class => "btn btn-block btn-sm btn-primary" %></th>
         </tr>
         <% rules.each do |rule| %>
             <tr>
@@ -12,6 +13,9 @@
                 <td class="col-md-1"><%= rule.action %></td>
                 <td  class="col-md-1"><%= rule.modifier %></td>
                 <td><%= rule.regex_string %></td>
+                <td class="col-md-1">
+                <%= link_to 'Remove', rule_destroy_path(rule),
+            data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
             </tr> 
         <% end %>
         </tbody>
