@@ -67,4 +67,5 @@ gem 'connection_pool', '~> 2.2.1'
 gem 'octokit', '~> 4.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sidekiq', '~> 5.0.3'
+gem 'net-ssh', '~> 4.1.0'
 
