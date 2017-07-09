@@ -6,8 +6,8 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
   @start = Time.now
   @data = Hash.new("")
   @request_id = nil
-  conn.server :production, :host => 'localhost', :port => 3000    # production, will render resposne
-  conn.server :shadow, :host => 'localhost', :port => 3001    # testing, internal only
+  conn.server :production, :host => ENV['MASTER_SHADOW'], :port => 3000    # production, will render resposne
+  conn.server :shadow, :host => ENV['SLAVE_SHADOW'], :port => 3001    # testing, internal only
 
   conn.on_data do |data|
     first_line = data.lines.first
@@ -20,6 +20,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
         puts "Processing non-idempotent request."  
         puts "Disabling non-idempotent requests untill next sync."
         redis.set('bucardo_active', "false")
+        BucardoManagerWorker.perform_async
       else
         puts "Bucardo is not active, ignoring request."  
       end 
