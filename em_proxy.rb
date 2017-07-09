@@ -9,6 +9,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
   conn.server :shadow, :host => ENV['SLAVE_SHADOW'], :port => 3000    # testing, internal only
 
   conn.on_data do |data|
+    #če je post ustavi bucardo
     @request_id = data.scan(/X-Request-Id: .*$/).first.split(":")[1].strip.gsub!(/\./, '-')
     redis.hset(@request_id, :request, data)
     redis.hset(@request_id, :url, data.lines.first.scan(/ \/.* /)[0])
@@ -27,6 +28,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     redis.hset(@request_id, :production, @data[:production])
     redis.hset(@request_id, :shadow, @data[:shadow])
     redis.hset(@request_id, :commit_hash, redis.get("commit_hash"))
+    #če je biu bucardo ustavlen sproži postopke da se spet prižge
     :close if name == :production
   end
 end
