@@ -25,11 +25,12 @@ class BucardoController
 
     def truncate_slave_db
         Net::SSH.start(@slave_ip, 'root') do |ssh|
-        [:truncate_slave].each do |command|
-            puts "Running command " + command
-            output = ssh.exec!(COMMANDS[command])
-            puts output
-        end    
+            [:truncate_slave].each do |command|
+                puts "Running command " + command
+                output = ssh.exec!(COMMANDS[command])
+                puts output
+            end
+        end     
     end
 
     def sync_slave_db
