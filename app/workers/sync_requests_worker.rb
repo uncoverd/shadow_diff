@@ -11,6 +11,8 @@ class SyncRequestsWorker
     new_responses.each do |response|
         if response.url.include?("assets")
           commit = Commit.find_or_create_by(commit_hash: response.commit_hash)
+          commit.score = 0
+          commit.save
           url = Url.find_or_create_by(path: response.url)
           db_response = Response.create(request_id: response.id, production: response.production_response,
                           shadow: response.shadow_response, url: url, time: response.time,
@@ -20,7 +22,7 @@ class SyncRequestsWorker
                                   commit: commit, status: :active, action: :modify, response: db_response)
           end  
         else
-          
+
         end    
         #redis_connection.delete(response.id)
     end
