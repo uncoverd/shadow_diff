@@ -36,7 +36,7 @@ class DuplexProxy
   def spawn_proxy
     REDIS.with do |conn|
       if conn.get("proxy_PID").to_i == 0
-        pid = Process.spawn("ruby #{Rails.root.join('em_proxy.rb')}")
+        pid = Process.spawn("bundle exec ruby #{Rails.root.join('em_proxy.rb')}")
         #Process.detach(pid)
         conn.set("proxy_PID", pid)
       else

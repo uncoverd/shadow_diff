@@ -1,5 +1,10 @@
 require 'em-proxy'
 require 'redis'
+require 'sidekiq'
+require './app/workers/bucardo_reset_worker'
+require './app/workers/bucardo_stop_worker'
+
+
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
 puts "Resetting slave db"
 redis.set("bucardo_active", "false")
