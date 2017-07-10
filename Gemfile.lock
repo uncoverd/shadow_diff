@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/uncoverd/em-proxy
+  revision: 2d25c3238a4dd87212102afff5c6f549b8e8ecfe
+  specs:
+    em-proxy (0.1.9)
+      eventmachine
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -75,8 +82,6 @@ GEM
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
     diffy (3.2.0)
-    em-proxy (0.1.9)
-      eventmachine
     erubis (2.7.0)
     eventmachine (1.2.3)
     execjs (2.7.0)
@@ -223,7 +228,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   connection_pool (~> 2.2.1)
   diffy (~> 3.2)
-  em-proxy (~> 0.1.9)
+  em-proxy!
   github_webhook (~> 1.0.4)
   jbuilder (~> 2.5)
   jquery-rails

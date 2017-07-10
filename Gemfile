@@ -61,7 +61,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'redis', '~>3.2'
 gem 'diffy', '~>3.2'
 gem 'github_webhook', '~> 1.0.4'
-gem 'em-proxy', '~> 0.1.9'
+
+gem 'em-proxy',  :git => 'https://github.com/uncoverd/em-proxy'
 gem 'uuid', '~> 2.3.7'
 gem 'connection_pool', '~> 2.2.1'
 gem 'octokit', '~> 4.0'
