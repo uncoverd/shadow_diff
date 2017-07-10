@@ -2,6 +2,7 @@ class BucardoController
     attr_accessor :master_ip, :slave_ip
 
     COMMANDS = {
+            :stop_sync => 'bucardo deactivate the_sync'
             :full_update => 'bucardo update sync the_sync onetimecopy=2',
             :reload_sync => 'bucardo reload the_sync',
             :status => 'bucardo status the_sync',
@@ -16,12 +17,26 @@ class BucardoController
         @slave_ip = slave_ip
     end
 
+    def stop_master_sync
+        stop_sync
+    end    
+
     def reset_slave_db
         truncate_slave_db
         sync_slave_db
     end
 
     private
+
+    def stop_sync
+       Net::SSH.start(@master_ip, 'root') do |ssh|
+            [:stop_sync].each do |command|
+                puts "Running command " + command.to_s
+                output = ssh.exec!(COMMANDS[command])
+                puts output
+            end    
+        end 
+    end 
 
     def truncate_slave_db
         Net::SSH.start(@slave_ip, 'root') do |ssh|
