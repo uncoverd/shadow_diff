@@ -2,7 +2,7 @@ class BucardoController
     attr_accessor :master_ip, :slave_ip
 
     COMMANDS = {
-            :stop_sync => 'bucardo deactivate the_sync'
+            :stop_sync => 'bucardo deactivate the_sync',
             :full_update => 'bucardo update sync the_sync onetimecopy=2',
             :reload_sync => 'bucardo reload the_sync',
             :status => 'bucardo status the_sync',
