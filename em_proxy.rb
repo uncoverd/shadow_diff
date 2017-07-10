@@ -63,8 +63,10 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     
     :close if name == :production
 
-    if @bucardo_stopped
-      puts "Finished non-idempotent request, resetting bucardo."
+    #sele ko konca z tem post requestom more resetirat bucardota
+
+    if @bucardo_stopped && redis.get('bucardo_working').to_s != "true"
+      puts "Finished non-idempotent request, reseting bucardo."
       BucardoResetWorker.perform_async
     end
   end
