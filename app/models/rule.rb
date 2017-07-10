@@ -2,7 +2,7 @@ class Rule < ApplicationRecord
   belongs_to :url
   belongs_to :commit
   belongs_to :response
-  has_many :comparison_results
+  has_many :comparison_results, dependent: :destroy
 
   validates :name, presence: true
   validates :regex_string, presence: true
