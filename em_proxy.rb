@@ -15,27 +15,32 @@ redis.set("bucardo_active", "true")
 
 def detect_tokens(data, request_id, redis)
   #tokens = data.scan(/_sample_app_session=.*?;/)
-  tokens = data.scan(/<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /)
-
-  if tokens.size > 0
+  csrf_token = data.scan(/<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /)
+  session_token = data.scan(/_sample_app_session=(.*?); path/)
+  if csrf_token.size > 0 && session_token.size > 0
     ip = request_id.split('-')[4..7].join('.')
-    redis.set(ip, tokens[0][0])
-    p tokens
-    p ip
-    puts "Found token " + tokens[0][0] + " and saved it for IP " + ip
+    redis.hset(ip, "csrf_token", csrf_token[0][0])
+    redis.hset(ip, "session_token", session_token[0][0])
+    puts "Found csrf " + csrf_token[0][0] + " and session token "+ session_token[0][0] +  " and saved them for IP " + ip
   end  
 end  
 
 def replace_tokens(data, request_id, redis)
   ip = request_id.split('-')[4..7].join('.')
-  tokens = data.scan(/authenticity_token=(.*?)&session/)
+  csrf_token = data.scan(/authenticity_token=(.*?)&session/)
+  session_token = data.scan(/_sample_app_session=(.*?);/)
   
-  if tokens.size > 0
-    puts "Found token in request."
-    stored_token = redis.get(ip)
-    if stored_token
-      puts "Found stored token, replacing " + tokens[0][0] + " with " + stored_token + "."
-      data = data.gsub(tokens[0][0], CGI.escape(stored_token))
+  if csrf_token.size > 0 && session_token.size > 0
+    puts "Found csrf token and session in request."
+    stored_csrf_token = redis.hget(ip, "csrf_token")
+    stored_session_token = redis.hget(ip, "session_token")
+    if stored_csrf_token && stored_session_token
+      puts "Found stored csrf token, replacing " + csrf_token[0][0] + " with " + stored_csrf_token + "."
+      puts "Found stored session token, replacing " + session_token[0][0] + " with " + stored_session_token + "."
+
+      data = data.gsub(csrf_token[0][0], CGI.escape(stored_csrf_token))
+      data = data.gsub(session_token[0][0], CGI.escape(stored_session_token))
+
     end   
   end  
   data
@@ -74,7 +79,8 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     else
       puts "Bucardo is down, skipping request."
     end
-    {:shadow => replace_tokens(data, @request_id, redis), :production => data}
+    replaced_data = replace_tokens(data, @request_id, redis)
+    {:shadow => replaced_data, :production => data}
   end
 
   conn.on_response do |server, resp|
