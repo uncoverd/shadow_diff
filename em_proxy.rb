@@ -33,7 +33,7 @@ def replace_tokens(data, request_id, redis)
     puts "Found token in request."
     stored_token = redis.get(ip)
     if stored_token
-      puts "Found stored token, replacing " + tokens[0] + " with " + stored_token + "."
+      puts "Found stored token, replacing " + tokens[0][0] + " with " + stored_token + "."
       data = data.gsub(tokens[0], stored_token)
     end   
   end  
