@@ -1,6 +1,7 @@
 require 'em-proxy'
 require 'redis'
 require 'sidekiq'
+require 'cgi'
 require './app/workers/bucardo_reset_worker'
 require './app/workers/bucardo_stop_worker'
 
@@ -18,7 +19,7 @@ def detect_tokens(data, request_id, redis)
 
   if tokens.size > 0
     ip = request_id.split('-')[4..7].join('.')
-    redis.set(ip, tokens[0])
+    redis.set(ip, tokens[0][0])
     p tokens
     p ip
     puts "Found token " + tokens[0][0] + " and saved it for IP " + ip
@@ -34,7 +35,7 @@ def replace_tokens(data, request_id, redis)
     stored_token = redis.get(ip)
     if stored_token
       puts "Found stored token, replacing " + tokens[0][0] + " with " + stored_token + "."
-      data = data.gsub(tokens[0], stored_token)
+      data = data.gsub(tokens[0][0], CGI.escape(stored_token))
     end   
   end  
   data
