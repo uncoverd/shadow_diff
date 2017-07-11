@@ -25,7 +25,7 @@ def detect_tokens(data, request_id, redis)
   end  
 end  
 
-def replace_tokens(data, request_id)
+def replace_tokens(data, request_id, redis)
   ip = request_id.split('-')[4..7].join('.')
   tokens = data.scan(/authenticity_token=(.*?)&session/)
   
@@ -73,7 +73,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     else
       puts "Bucardo is down, skipping request."
     end
-    {:shadow => replace_tokens(data, @request_id), :production => data}
+    {:shadow => replace_tokens(data, @request_id, redis), :production => data}
   end
 
   conn.on_response do |server, resp|
