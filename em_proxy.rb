@@ -39,11 +39,13 @@ def replace_tokens(data, request_id)
     stored_csrf_token = redis.hget(ip, "csrf_token")
     stored_session_token = redis.hget(ip, "session_token")
     if stored_csrf_token && stored_session_token
+      p stored_session_token.length
+      p session_token[0][0].length
       puts "Found stored csrf token, replacing " + csrf_token[0][0] + " with " + stored_csrf_token + "."
       puts "Found stored session token, replacing " + session_token[0][0] + " with " + stored_session_token + "."
 
       data = data.gsub(csrf_token[0][0], CGI.escape(stored_csrf_token))
-      data = data.gsub(session_token[0][0], CGI.escape(stored_session_token))
+      data = data.gsub(session_token[0][0], stored_session_token)
 
     end   
   end  
