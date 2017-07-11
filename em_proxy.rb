@@ -13,7 +13,9 @@ redis.set("bucardo_active", "true")
 #redis.set("bucardo_active", "false")
 #BucardoResetWorker.perform_async
 
-def detect_tokens(data, request_id, redis)
+def detect_tokens(data, request_id)
+  redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
+
   #tokens = data.scan(/_sample_app_session=.*?;/)
   csrf_token = data.scan(/<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /)
   session_token = data.scan(/_sample_app_session=(.*?); path/)
@@ -25,7 +27,9 @@ def detect_tokens(data, request_id, redis)
   end  
 end  
 
-def replace_tokens(data, request_id, redis)
+def replace_tokens(data, request_id)
+  redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
+
   ip = request_id.split('-')[4..7].join('.')
   csrf_token = data.scan(/authenticity_token=(.*?)&session/)
   session_token = data.scan(/_sample_app_session=(.*?);/)
@@ -79,7 +83,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     else
       puts "Bucardo is down, skipping request."
     end
-    replaced_data = replace_tokens(data, @request_id, redis)
+    replaced_data = replace_tokens(data, @request_id)
     {:shadow => replaced_data, :production => data}
   end
 
@@ -96,11 +100,11 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
       redis.hset(@request_id, :shadow, @data[:shadow])
       redis.hset(@request_id, :commit_hash, redis.get("commit_hash"))
     else
-      puts "Finished ignored request by " + name
+      puts "Finished ignored request by " + name.to_s
     end
 
     if name == :shadow
-      detect_tokens(@data[:shadow], @request_id, redis)
+      detect_tokens(@data[:shadow], @request_id)
     end  
     :close if name == :production
 
