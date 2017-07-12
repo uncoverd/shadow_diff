@@ -6,9 +6,11 @@ require './app/workers/bucardo_reset_worker'
 require './app/workers/bucardo_stop_worker'
 
 SCAN_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /,
-              'session_token' => /_sample_app_session=(.*?); path/}
+              'session_token' => /_sample_app_session=(.*?); path/,
+              'remember_token' => /_remember_token=(.*?); path/}
 REPLACE_REGEX = {'csrf_token' => /authenticity_token=(.*?)&session/,
-              'session_token' => /_sample_app_session=(.*?);/}
+              'session_token' => /_sample_app_session=(.*?);/,
+              'remember_token' => /_remember_token=(.*?);/}
 ESCAPED_TOKENS = ['csrf_token']
 
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
@@ -51,7 +53,7 @@ def replace_tokens(data, request_id)
           puts "Escaping " + token_name.to_s
           escaped_token = CGI.escape(stored_token)
         end  
-        data = data.gsub(token[0][0], stored_token)
+        data = data.gsub(token[0][0], escaped_token)
       end
 
     end  
