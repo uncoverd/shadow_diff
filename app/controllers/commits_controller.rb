@@ -17,7 +17,7 @@ class CommitsController < ApplicationController
       @pending_responses = []
       @redis_down = true
     end
-    @responses = @commit.responses.order(score: :asc)
+    @responses = @commit.responses.order(time: :desc)
   end
 
   # GET /commits/new
