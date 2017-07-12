@@ -5,10 +5,10 @@ require 'cgi'
 require './app/workers/bucardo_reset_worker'
 require './app/workers/bucardo_stop_worker'
 
-SCAN_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /
+SCAN_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /,
               'session_token' => /_sample_app_session=(.*?); path/}
-REPLACE_REGEX = {'csrf_token' => /authenticity_token=(.*?)&session/
-              'session_token' => /_sample_app_session=(.*?);/)}
+REPLACE_REGEX = {'csrf_token' => /authenticity_token=(.*?)&session/,
+              'session_token' => /_sample_app_session=(.*?);/}
 ESCAPED_TOKENS = ['csrf_token']
 
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
@@ -45,12 +45,13 @@ def replace_tokens(data, request_id)
       puts "Found " + token_name.to_s + " in request."
       stored_token = redis.hget(ip, token_name)
       if stored_token
-        puts "Found stored " + token_name.to_S + " token, replacing " + token + " with " + stored_token + "."
-        escaped_token = token
+        puts "Found stored " + token_name.to_s + " token, replacing " + token[0][0] + " with " + stored_token + "."
+        escaped_token = stored_token
         if ESCAPED_TOKENS.include?(token_name)
-          escaped_token = CGI.escape(token)
+          puts "Escaping " + token_name.to_s
+          escaped_token = CGI.escape(stored_token)
         end  
-        data = data.gsub(token[0][0], escaped_token)
+        data = data.gsub(token[0][0], stored_token)
       end
 
     end  
@@ -81,8 +82,9 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
         puts "Processing idempotent request."
       end
 
-      replaced_data = replace_tokens(data, @request_id)
       @request_id = data.scan(/X-Request-Id: .*$/).first.split(":")[1].strip.gsub!(/\./, '-')
+      replaced_data = replace_tokens(data, @request_id)
+
       redis.hset(@request_id, :url, url)
       redis.hset(@request_id, :verb, verb)
       redis.hset(@request_id, :time, Time.now.ctime)
