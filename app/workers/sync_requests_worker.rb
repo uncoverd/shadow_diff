@@ -27,7 +27,7 @@ class SyncRequestsWorker
         end    
         #redis_connection.delete(response.id)
     end
-    Commit.last.update_scores
+    ScoreUpdateWorker.perform_async
   end
 
 end
