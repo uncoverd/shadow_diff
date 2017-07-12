@@ -12,7 +12,8 @@ SCAN_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\"hidden\
 REPLACE_REGEX = {'csrf_token' => /authenticity_token=(.*?)&session/,
               'session_token' => /_sample_app_session=(.*?);/,
               'remember_token' => /remember_token=(.*?);/,
-              'csrf_meta_tag' => /authenticity_token=(.*?)&session/}
+              'csrf_meta_tag' => /authenticity_token=(.*?)(&|$)/}
+              #/authenticity_token=(.*?)$
 ESCAPED_TOKENS = ['csrf_token', 'csrf_meta_tag']
 
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
