@@ -62,12 +62,20 @@
         </div>
 
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <div class="box wrapped_element">
                     <div class="box-header">
-                        <h3 class="box-title">User request</h3>
+                        <h3 class="box-title">Production request</h3>
                     </div>
-                        <%= simple_format(@response.request, { class: 'full_request wrapped_element'}, wrapper_tag: "div") %>
+                        <%= simple_format(@response.production_request, { class: 'full_request wrapped_element'}, wrapper_tag: "div") %>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="box wrapped_element">
+                    <div class="box-header">
+                        <h3 class="box-title">Shadow request</h3>
+                    </div>
+                        <%= simple_format(@response.shadow_request, { class: 'full_request wrapped_element'}, wrapper_tag: "div") %>
                 </div>
             </div>
         </div>

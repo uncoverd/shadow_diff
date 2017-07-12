@@ -9,7 +9,8 @@ class CreateResponses < ActiveRecord::Migration[5.0]
       t.integer :commit_id
       t.datetime :time
       t.float :score
-      t.text :request
+      t.text :production_request
+      t.text :shadow_request
       t.string :verb
       t.timestamps
     end

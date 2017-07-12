@@ -7,7 +7,9 @@ class RawResponseSerializer
         raw_response = RawResponse.new(key).tap do |response|
             response.production_response = @connection.hget(key, "production")
             response.shadow_response = @connection.hget(key, "shadow")
-            response.request = @connection.hget(key, "request")
+            response.production_request = @connection.hget(key, "production_request")
+            response.shadow_request = @connection.hget(key, "shadow_request")
+
             response.time = @connection.hget(key, "time")
             response.commit_hash = @connection.hget(key, "commit_hash")
             response.url = @connection.hget(key,"url")

@@ -78,15 +78,17 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
       end
 
       @request_id = data.scan(/X-Request-Id: .*$/).first.split(":")[1].strip.gsub!(/\./, '-')
-      redis.hset(@request_id, :request, data)
       redis.hset(@request_id, :url, url)
       redis.hset(@request_id, :verb, verb)
       redis.hset(@request_id, :time, Time.now.ctime)
+      replaced_data = replace_tokens(data, @request_id)
+      redis.hset(@request_id, :production_request, data)
+      redis.hset(@request_id, :shadow_request, data)
+      {:shadow => replaced_data, :production => data}
     else
       puts "Bucardo is down, skipping request."
+      data
     end
-    replaced_data = replace_tokens(data, @request_id)
-    {:shadow => replaced_data, :production => data}
   end
 
   conn.on_response do |server, resp|

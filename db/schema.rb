@@ -41,10 +41,11 @@ ActiveRecord::Schema.define(version: 20170702103420) do
     t.text     "shadow"
     t.datetime "time"
     t.float    "score"
-    t.text     "request"
+    t.text     "production_request"
+    t.text     "shadow_request"
     t.string   "verb"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.index ["commit_id"], name: "index_responses_on_commit_id"
     t.index ["url_id"], name: "index_responses_on_url_id"
   end
