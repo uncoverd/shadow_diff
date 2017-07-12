@@ -7,8 +7,8 @@ require './app/workers/bucardo_stop_worker'
 
 SCAN_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /,
               'session_token' => /_sample_app_session=(.*?); path/,
-              'remember_token' => /remember_token=(.*?); path/},
-              'csrf_meta_tag' => /<meta content=".*=" name="csrf-token" \/>/
+              'remember_token' => /remember_token=(.*?); path/,
+              'csrf_meta_tag' => /<meta content=\"(.*?)\" name=\"csrf-token\" \/>/}
 REPLACE_REGEX = {'csrf_token' => /authenticity_token=(.*?)&session/,
               'session_token' => /_sample_app_session=(.*?);/,
               'remember_token' => /remember_token=(.*?);/,
@@ -31,7 +31,7 @@ def detect_tokens(data, request_id)
     token = data.scan(SCAN_REGEX[token_name])
     if token.size > 0
       redis.hset(ip, token_name, token[0][0])
-      puts "Found " + token_name.to_s + token[0][0]
+      puts "Found " + token_name.to_s + " " +token[0][0]
     end  
   end  
   puts "Saved them for IP " + ip 
