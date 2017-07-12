@@ -7,11 +7,13 @@ require './app/workers/bucardo_stop_worker'
 
 SCAN_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /,
               'session_token' => /_sample_app_session=(.*?); path/,
-              'remember_token' => /_remember_token=(.*?); path/}
+              'remember_token' => /remember_token=(.*?); path/},
+              'csrf_meta_tag' => /<meta content=".*=" name="csrf-token" \/>/
 REPLACE_REGEX = {'csrf_token' => /authenticity_token=(.*?)&session/,
               'session_token' => /_sample_app_session=(.*?);/,
-              'remember_token' => /_remember_token=(.*?);/}
-ESCAPED_TOKENS = ['csrf_token']
+              'remember_token' => /remember_token=(.*?);/,
+              'csrf_meta_tag' => /authenticity_token=(.*?)&session/}
+ESCAPED_TOKENS = ['csrf_token', 'csrf_meta_tag']
 
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
 
