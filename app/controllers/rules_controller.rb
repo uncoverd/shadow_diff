@@ -30,7 +30,7 @@ class RulesController < ApplicationController
 
     respond_to do |format|
       if @rule.save
-        @rule.response.commit.update_scores
+        ScoreUpdateWorker.perform_async
         format.html { redirect_to response_path(@rule.response), notice: 'Rule was successfully created.' }
         format.json { render :show, status: :created, location: @rule }
       else

@@ -33,10 +33,10 @@ def detect_tokens(data, request_id)
     if token.size > 0
       redis.hset(ip, token_name, token[0][0])
       puts "Found " + token_name.to_s + " " +token[0][0]
-    end  
-  end  
-  puts "Saved them for IP " + ip 
-end  
+    end
+  end
+  puts "Saved them for IP " + ip
+end
 
 def replace_tokens(data, request_id)
   redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
@@ -55,12 +55,12 @@ def replace_tokens(data, request_id)
         if ESCAPED_TOKENS.include?(token_name)
           puts "Escaping " + token_name.to_s
           escaped_token = CGI.escape(stored_token)
-        end  
+        end
         data = data.gsub(token[0][0], escaped_token)
       end
 
-    end  
-  end  
+    end
+  end
   data
 end
 
@@ -109,7 +109,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
 
   conn.on_finish do |name|
     p [:on_finish, name, Time.now - @start]
-    
+
     if @request_id
       puts "Saving request to redis."
       redis.hset(@request_id, :production, @data[:production])
@@ -121,7 +121,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
 
     if name == :shadow
       detect_tokens(@data[:shadow], @request_id)
-    end  
+    end
     :close if name == :production
 
     if @bucardo_stopped && redis.get('bucardo_working').to_s != "true"
