@@ -1,5 +1,5 @@
 class Commit < ApplicationRecord
-    has_many :responses
+    has_many :responses, dependent: :destroy
     MIN_NUMBER_RESPONSES = 10
 
     def update_scores
