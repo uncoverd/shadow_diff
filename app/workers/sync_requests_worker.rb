@@ -25,7 +25,7 @@ class SyncRequestsWorker
                                   commit: commit, status: :active, action: :modify, response: db_response)
           end
         end    
-        #redis_connection.delete(response.id)
+        redis_connection.delete(response.id)
     end
     ScoreUpdateWorker.perform_async
   end
