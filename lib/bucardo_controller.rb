@@ -3,6 +3,7 @@ class BucardoController
 
     COMMANDS = {
             :stop_sync => 'bucardo deactivate the_sync',
+            :start_sync => 'bucardo activate the_sync',
             :full_update => 'bucardo update sync the_sync onetimecopy=2',
             :reload_sync => 'bucardo reload the_sync',
             :status => 'bucardo status the_sync',
@@ -50,7 +51,7 @@ class BucardoController
 
     def sync_slave_db
        Net::SSH.start(@master_ip, 'root') do |ssh|
-            [:status, :full_update, :reload, :stop, :wait, :start, :status].each do |command|
+            [:status, :start_sync, :full_update, :reload, :stop, :wait, :start, :status].each do |command|
                 puts "Running command " + command.to_s
                 output = ssh.exec!(COMMANDS[command])
                 puts output
