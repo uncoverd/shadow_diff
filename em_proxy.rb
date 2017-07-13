@@ -12,7 +12,7 @@ STOP_BUCARDO_REGEX = {'csrf_token' => /<input name=\"authenticity_token\" type=\
               #'csrf_meta_tag' => /<meta content=\"(.*?)\" name=\"csrf-token\" \/>/}
 REPLACE_REGEX = {#'csrf_token' => /authenticity_token=(.*?)&session/,
               #'session_token' => /_sample_app_session=(.*?);/,
-              'remember_token' => /remember_token=(.*?);/}
+              'remember_token' => /remember_token=(.*?)(;|\r)/}
               #'csrf_meta_tag' => /authenticity_token=(.*?)(&|$)/}
               #/authenticity_token=(.*?)$
 ESCAPED_TOKENS = ['csrf_token', 'csrf_meta_tag']
@@ -44,7 +44,7 @@ end
 def detect_tokens(data, request_id)
   redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
   ip = request_id.split('-')[4..7].join('.')
-  
+
   SCAN_REGEX.keys.each do |token_name|
     token = data.scan(SCAN_REGEX[token_name])
     if token.size > 0
