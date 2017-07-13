@@ -79,10 +79,10 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
       verb = first_line.split("/")[0].strip
       url = first_line.scan(/ \/.* /)[0]
       if ['POST','DELETE','PATCH'].include? verb
-        #puts "Processing non-idempotent request and disabling non-idempotent requests untill next sync."
+        puts "Processing non-idempotent request stopping bucardo sync."
         #redis.set('bucardo_active', "false")
         #@bucardo_stopped = true
-        #BucardoStopWorker.perform_async
+        BucardoStopWorker.perform_async
       else
         puts "Processing idempotent request."
       end
