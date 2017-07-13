@@ -19,10 +19,10 @@ ESCAPED_TOKENS = ['csrf_token', 'csrf_meta_tag']
 redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
 
 puts "Resetting slave db"
-redis.set("bucardo_active", "true")
+#redis.set("bucardo_active", "true")
 
-#redis.set("bucardo_active", "false")
-#BucardoResetWorker.perform_async
+redis.set("bucardo_active", "false")
+BucardoResetWorker.perform_async
 
 def detect_tokens(data, request_id)
   redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
