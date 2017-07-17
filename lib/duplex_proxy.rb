@@ -14,7 +14,7 @@ class DuplexProxy
     commit.commit_url = url
     commit.save
     REDIS.with do |conn|
-      conn.set("commit_hash", commit)
+      conn.set("commit_hash", commit.commit_hash)
     end  
     puts repo
     puts commit
