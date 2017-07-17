@@ -10,8 +10,9 @@
 
 
     <section class="content">
-        <div class="row">
-            <div class="col-md-6">
+
+         <div class="row">
+            <div class="col-md-10">
                 <div class="box box-warning">
                     <div class="box-header">
                         <h3 class="box-title">Active rules</h3>
@@ -36,7 +37,48 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-10">
+                <div class="box box-warning">
+                    <div class="box-header">
+                        <h3 class="box-title">Shadow response metrics</h3>   
+                    </div>
+                    <div class="box-body no-padding">
 
+                        <div class="col-sm-4 col-xs-6">
+                            <div class="description-block border-right">
+                            
+                                <h5 class="description-header"><%= @response.db_runtime_diff_output %> ms</h5>
+                            <span class="description-text">Database runtime</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 col-xs-6">
+                            <div class="description-block border-right">
+                            <h5 class="description-header"><%= @response.view_runtime_diff_output %> ms</h5>
+                            <span class="description-text">View runtime</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 col-xs-6">
+                            <div class="description-block">
+                            <h5 class="description-header"><%= @response.sql_requests_diff_output %></h5>
+                            <span class="description-text">Sql queries</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+    
+    
         <div class="row">
             <div class="col-md-5">
                 <div class="box wrapped_element box-success box-solid">

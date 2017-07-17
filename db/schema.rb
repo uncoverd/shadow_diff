@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702103420) do
+ActiveRecord::Schema.define(version: 20170717201557) do
 
   create_table "commits", force: :cascade do |t|
     t.float    "score"
@@ -44,8 +44,14 @@ ActiveRecord::Schema.define(version: 20170702103420) do
     t.text     "production_request"
     t.text     "shadow_request"
     t.string   "verb"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.float    "shadow_sql_requests"
+    t.float    "production_sql_requests"
+    t.float    "shadow_view_runtime"
+    t.float    "production_view_runtime"
+    t.float    "shadow_db_runtime"
+    t.float    "production_db_runtime"
     t.index ["commit_id"], name: "index_responses_on_commit_id"
     t.index ["url_id"], name: "index_responses_on_url_id"
   end
