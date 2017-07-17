@@ -25,7 +25,7 @@ class Commit < ApplicationRecord
     end    
 
     def completion_color
-        completion_ratio >= 100 ? 'sucess' : 'warning'
+        completion_ratio >= 100 ? 'success' : 'warning'
     end
 
     def score_icon
