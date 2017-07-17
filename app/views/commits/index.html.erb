@@ -21,7 +21,7 @@
                     <div class="box-header">
                         <h3 class="box-title">Active commit</h3>
                     </div>
-                    <%= render partial: "commits", object: @commits %>
+                    <%= render partial: "commits", object: @recent_commits %>
                     <!-- /.box-body -->
                 </div>
             </div>
@@ -34,7 +34,7 @@
                         <h3 class="box-title">Past commits</h3>
                     </div>
                     <!-- /.box-header -->
-                    <%= render partial: "commits", object: @commits %>
+                    <%= render partial: "commits", object: @old_commits %>
                 </div>
             </div>
         </div>

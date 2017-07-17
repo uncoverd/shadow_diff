@@ -4,7 +4,8 @@ class CommitsController < ApplicationController
   # GET /commits
   # GET /commits.json
   def index
-    @commits = Commit.all
+    @recent_commits = Commit.where("created_at > ?", 1.day.ago)
+    @old_commits = Commit.where("created_at < ?", 1.day.ago)
   end
 
   # GET /commits/1
