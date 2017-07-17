@@ -1,12 +1,5 @@
 class DuplexProxy
 
-  MESSAGES = {
-    'sucess' => 'passed',
-    'pending' => 'in progress',
-    'failure' => 'failed',
-    'error' => 'error'
-  }
-
   def start(repo, commit, author, title, url)
     puts "STARTING PROXY"
     commit = Commit.find_or_create_by(commit_hash: commit)
@@ -26,15 +19,16 @@ class DuplexProxy
   def stop(repo, commit)
     puts "STOPING PROXY"
     kill_proxy
-    notify_github(repo, commit, 'failure')
+    active_commit = Commit.find_by(commit_hash: commit)
+    notify_github(repo, commit, active_commit.github_status, active_commit.github_description)
   end
 
   private
 
-  def notify_github(repo, commit, status)
+  def notify_github(repo, commit, status, description)
     Octokit.create_status(repo, commit, status,
                           :context => 'Request shadowing',
-                          :description => MESSAGES[status])
+                          :description => description)
   end
 
   def spawn_proxy

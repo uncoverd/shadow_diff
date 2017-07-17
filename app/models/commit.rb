@@ -2,6 +2,13 @@ class Commit < ApplicationRecord
     has_many :responses, dependent: :destroy
     MIN_NUMBER_RESPONSES = 10
 
+    GITHUB_DESCRIPTION = {
+        'sucess' => 'passed',
+        'pending' => 'in progress',
+        'failure' => 'failed',
+        'error' => 'error'
+    }
+
     def update_scores
         Rule.where(status: :missing).destroy_all
         responses.each do |response|
@@ -25,9 +32,19 @@ class Commit < ApplicationRecord
         score >= 0 ? 'ok text-success' : 'remove text-danger'
     end
 
-    
-
     def completion_ratio
         (responses.count.to_f/MIN_NUMBER_RESPONSES) * 100
-    end         
+    end
+    
+    def github_status
+        if completion_ratio >= 100 && score >= 0
+            'success'
+        else
+            'failure'
+        end    
+    end
+    
+    def github_description
+        GITHUB_DESCRIPTION[github_status]
+    end
 end
