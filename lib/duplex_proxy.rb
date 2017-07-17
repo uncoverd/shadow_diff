@@ -2,24 +2,24 @@ class DuplexProxy
 
   def start(repo, commit, author, title, url)
     puts "STARTING PROXY"
-    commit = Commit.find_or_create_by(commit_hash: commit)
-    commit.description = title
-    commit.commit_url = url
-    commit.save
+    active_commit = Commit.find_or_create_by(commit_hash: commit)
+    active_commit.description = title
+    active_commit.commit_url = url
+    active_commit.save
     REDIS.with do |conn|
-      conn.set("commit_hash", commit.commit_hash)
+      conn.set("commit_hash", active_commit.commit_hash)
     end  
     puts repo
     puts commit
     puts author
     spawn_proxy
-    notify_github(repo, commit, 'pending')
+    notify_github(repo, commit, active_commit.github_status, active_commit.github_description)
   end
 
   def stop(repo, commit)
     puts "STOPING PROXY"
     kill_proxy
-    active_commit = Commit.find_by(commit_hash: commit)
+    active_commit = Commit.find_by(commit_hash: commit)a
     notify_github(repo, commit, active_commit.github_status, active_commit.github_description)
   end
 

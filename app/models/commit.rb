@@ -39,7 +39,9 @@ class Commit < ApplicationRecord
     def github_status
         if completion_ratio >= 100 && score >= 0
             'success'
-        else
+        elsif completion_ratio < 100
+            'pending'
+        else    
             'failure'
         end    
     end
