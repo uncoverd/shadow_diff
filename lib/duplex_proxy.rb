@@ -19,7 +19,7 @@ class DuplexProxy
   def stop(repo, commit)
     puts "STOPING PROXY"
     kill_proxy
-    active_commit = Commit.find_by(commit_hash: commit)a
+    active_commit = Commit.find_by(commit_hash: commit)
     notify_github(repo, commit, active_commit.github_status, active_commit.github_description)
   end
 
