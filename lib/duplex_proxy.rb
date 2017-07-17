@@ -7,10 +7,12 @@ class DuplexProxy
     'error' => 'error'
   }
 
-  def start(repo, commit, author, title)
+  def start(repo, commit, author, title, url)
     puts "STARTING PROXY"
     commit = Commit.find_or_create_by(commit_hash: commit)
     commit.description = title
+    commit.commit_url = url
+    commit.save
     REDIS.with do |conn|
       conn.set("commit_hash", commit)
     end  

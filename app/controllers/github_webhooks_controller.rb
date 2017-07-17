@@ -7,11 +7,12 @@ class GithubWebhooksController < ActionController::Base
     commit_hash = payload['pull_request']['head']['sha']
     author = payload['pull_request']['user']['login']
     title = payload['pull_request']['title']
+    url = payload['pull_request']['url']
     puts repo_name
     puts commit_hash
     
     if pull_request_labeled(payload)
-      proxy.start(repo_name, commit_hash, author, title)
+      proxy.start(repo_name, commit_hash, author, title, url)
     elsif pull_request_unlabeled(payload)
       proxy.stop(repo_name, commit_hash)
     end    
