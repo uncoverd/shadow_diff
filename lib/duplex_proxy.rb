@@ -7,14 +7,16 @@ class DuplexProxy
     'error' => 'error'
   }
 
-  def start(repo, commit)
+  def start(repo, commit, author, title)
     puts "STARTING PROXY"
-    Commit.find_or_create_by(commit_hash: commit)
+    commit = Commit.find_or_create_by(commit_hash: commit)
+    commit.description = title
     REDIS.with do |conn|
       conn.set("commit_hash", commit)
     end  
     puts repo
     puts commit
+    puts author
     spawn_proxy
     notify_github(repo, commit, 'pending')
   end
