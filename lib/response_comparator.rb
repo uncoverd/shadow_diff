@@ -12,10 +12,15 @@ class ResponseComparator
         remove_previous_comparisons
         checked_lines = check_affected_lines
         check_missing_lines(changed_lines - checked_lines)
+        check_metrics
         @score
     end
 
     private
+
+    def check_metrics
+        @score += @response.metric_score
+    end    
 
     def check_affected_lines
         affected_lines = []

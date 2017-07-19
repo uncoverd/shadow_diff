@@ -4,8 +4,18 @@ class Response < ApplicationRecord
     has_many :rules, dependent: :destroy
     include ResponsesHelper
 
+    MAX_RUNTIME = 200
+    MAX_QUERIES = 20
 
     def color
         score >= 0 ? "green" : "red"
     end
+
+    def metric_score
+        if view_runtime_diff > MAX_RUNTIME || db_runtime_diff > MAX_RUNTIME || sql_requests_diff > MAX_QUERIES
+            -10
+        else
+            0
+        end        
+    end    
 end
