@@ -11,34 +11,6 @@
 
     <section class="content">
 
-         <div class="row">
-            <div class="col-md-10">
-                <div class="box box-warning">
-                    <div class="box-header">
-                        <h3 class="box-title">Active rules</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <%= render partial: "rules/rules", object: @active_rules %>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="row">
-            <div class="col-md-10">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Applied rules</h3>
-                    </div>
-                    <%= render partial: "comparison_results/results", object: @evaluated_results %>
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-md-10">
                 <div class="box box-<%= @response.metric_score_color%>">
@@ -77,9 +49,40 @@
                 </div>
             </div>
             
-        </div>
+        </div>    
 
-    
+         <div class="row">
+            <div class="col-md-10">
+                <div class="box box-warning collapsed-box">
+                    <div class="box-header">
+                        <h3 class="box-title">Active rules</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <%= render partial: "rules/rules", object: @active_rules %>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="box box-warning <%= 'collapsed-box' if @response.score == 0%>">
+                    <div class="box-header">
+                        <h3 class="box-title">Applied rules</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <%= render partial: "comparison_results/results", object: @evaluated_results %>
+                </div>
+            </div>
+        </div>
     
         <div class="row">
             <div class="col-md-5">
