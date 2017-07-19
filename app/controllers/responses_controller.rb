@@ -9,8 +9,8 @@ class ResponsesController < ApplicationController
   # GET /responses/1
   # GET /responses/1.json
   def show
-    @active_rules = @response.rules.where(modifier: 0..Float::INFINITY)
-    @evaluated_results = ComparisonResult.includes(:rule).where(response: @response).order(line_score: :desc)
+    @active_rules = @response.rules.active
+    @evaluated_results = @response.comparison_results.includes(:rule).order(line_score: :desc)
   end
 
   # GET /responses/new

@@ -13,6 +13,9 @@ class Rule < ApplicationRecord
   enum status: [:active, :missing, :default]
   enum action: [:modify, :add, :remove]
 
+  scope :active, -> { where(modifier: 0..Float::INFINITY) }
+
+
   def self.default_regexes
     [['ETag', 'ETag'], ['Set-Cookie', 'SetCookie'], ['X-Runtime', 'X-Runtime'], ['<meta content=(.)* name="csrf-token" />', "CSRF token"],
     ['CSRF form token',

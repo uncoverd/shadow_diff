@@ -2,6 +2,7 @@ class Response < ApplicationRecord
     belongs_to :commit
     belongs_to :url
     has_many :rules, dependent: :destroy
+    has_many :comparison_results, dependent: :destroy
     include ResponsesHelper
 
     MAX_RUNTIME = 200
