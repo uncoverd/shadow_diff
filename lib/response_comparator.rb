@@ -19,7 +19,13 @@ class ResponseComparator
     private
 
     def check_metrics
-        @score += @response.metric_score
+        metric_score = @response.metric_score
+        if metric_score < 0
+            rule = Rule.create(modifier: Response::NEGATIVE_METRIC_SCORE, name: 'Response metrics', regex_string: "(?=a)b", url: @response.url,
+                            commit: @response.commit, status: :missing, action: :modify, response: @response)  
+            ComparisonResult.create(response: @response, rule: rule, line_score: rule.modifier, line: '')
+            @score += metric_score
+        end    
     end    
 
     def check_affected_lines
@@ -56,7 +62,7 @@ class ResponseComparator
             action = :remove
             name = 'Removed'
         end        
-        rule = Rule.create( modifier: Rule.missing_modifier, name: name, regex_string: "(?=a)b", url: @response.url,
+        rule = Rule.create( modifier: Rule::MISSING_MODIFIER, name: name, regex_string: "(?=a)b", url: @response.url,
                             commit: @response.commit, status: :missing, action: action, response: @response)  
         ComparisonResult.create(response: @response, rule: rule, line_score: rule.modifier, line: line)
         @score += rule.modifier

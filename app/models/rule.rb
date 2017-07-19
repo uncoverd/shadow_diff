@@ -8,6 +8,7 @@ class Rule < ApplicationRecord
   validates :regex_string, presence: true
   validates :modifier, numericality: true
 
+  MISSING_MODIFIER = -1
 
   enum status: [:active, :missing, :default]
   enum action: [:modify, :add, :remove]
@@ -17,11 +18,7 @@ class Rule < ApplicationRecord
     ['CSRF form token',
     '    <form accept-charset=\"UTF-8\" action=\"/sessions\" method=\"post\"><div style=\"margin:0;padding:0;display:inline\"><input name=\"utf8\" type=\"hidden\" value=\"&#x2713;\" /><input name=\"authenticity_token\" type=\"hidden\" value=\"(.*?)\" /></div>'],
     ['X-View-Runtime', 'X-View-Runtime'],['X-Db-Runtime', 'X-Db-Runtime'],['X-Sql-Queries', 'X-Sql-Queries']]
-  end
-
-  def self.missing_modifier
-    -1
-  end     
+  end   
 
   
 end

@@ -6,6 +6,7 @@ class Response < ApplicationRecord
 
     MAX_RUNTIME = 200
     MAX_QUERIES = 20
+    NEGATIVE_METRIC_SCORE = -20
 
     def color
         score >= 0 ? "green" : "red"
@@ -13,7 +14,7 @@ class Response < ApplicationRecord
 
     def metric_score
         if view_runtime_diff > MAX_RUNTIME || db_runtime_diff > MAX_RUNTIME || sql_requests_diff > MAX_QUERIES
-            -10
+            NEGATIVE_METRIC_SCORE
         else
             0
         end        
