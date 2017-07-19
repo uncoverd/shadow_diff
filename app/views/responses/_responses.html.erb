@@ -1,15 +1,13 @@
 <div class="box-body no-padding">
     <table class="table table-striped">
         <tbody><tr>
-            <th>URL</th>
             <th>Request ID</th>
             <th>Time</th>
             <th>Score</th>
         </tr>
-        <%responses.each do |response| %>
+        <% responses.each do |response| %>
                 <tr>
-                    <td><%= response.url.path %></td>
-                    <td><%= link_to response.request_id, response_path(response.id) %></td>
+                    <td><%= link_to response.request_id, commit_url_response_path(@commit.id, @url.id, response.id) %></td>
                     <td><%= response.time.strftime("%e %b %T") %></td>                    
                     <td>
                         <% if response.score %>

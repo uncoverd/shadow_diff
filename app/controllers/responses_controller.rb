@@ -3,7 +3,9 @@ class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.json
   def index
-    @responses = Response.all
+    @commit = Commit.find(params[:commit_id])
+    @url = Url.find(params[:url_id])
+    @responses = @commit.responses.where(url: @url)
   end
 
   # GET /responses/1

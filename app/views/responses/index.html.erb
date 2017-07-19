@@ -1,25 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Responses</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+        Captured interactions for pull request <%= link_to @commit.description, @commit.commit_url %>
+        <small><%= @commit.short_hash %></small>
+        </h1>
+    </section>
 
-  <tbody>
-    <% @responses.each do |response| %>
-      <tr>
-        <td><%= link_to 'Show', response %></td>
-        <td><%= link_to 'Edit', edit_response_path(response) %></td>
-        <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
+    <section class="content">
 
-<%= link_to 'New Response', new_response_path %>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Requests for URL: <%= @url.path %></h3>
+                    </div>
+                    <%= render partial: "responses", object: @responses %>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
