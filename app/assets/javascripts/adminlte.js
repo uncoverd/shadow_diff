@@ -775,12 +775,12 @@ throw new Error('AdminLTE requires jQuery')
 
     $(this.element).on('click', this.options.collapseTrigger, function (event) {
       if (event) event.preventDefault()
-      that.toggle()
+      //that.toggle()
     })
 
     $(this.element).on('click', this.options.removeTrigger, function (event) {
       if (event) event.preventDefault()
-      that.remove()
+      //that.remove()
     })
   }
 
