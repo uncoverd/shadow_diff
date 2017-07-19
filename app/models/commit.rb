@@ -20,6 +20,10 @@ class Commit < ApplicationRecord
         self.save
     end
 
+    def negative_responses
+        responses.map(&:score).select(&:negative?).count
+    end    
+
     def short_hash
         commit_hash[0..7]
     end    
@@ -31,6 +35,10 @@ class Commit < ApplicationRecord
     def score_icon
         score >= 0 ? 'ok text-success' : 'remove text-danger'
     end
+
+    def score_color
+        score >= 0 ? 'green' : 'red'
+    end    
 
     def completion_ratio
         (responses.count.to_f/MIN_NUMBER_RESPONSES) * 100

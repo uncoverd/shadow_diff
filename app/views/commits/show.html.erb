@@ -11,24 +11,43 @@
 
 
     <section class="content">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="box box-warning">
-                    <div class="box-header">
-                        <h3 class="box-title">Pending requests <small><%= '(Redis offline)' if @redis_down %></small></h3>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Evaluated requests</h3>
+                        <h3 class="box-title">URLs</h3>
                     </div>
-                    <%= render partial: "responses/responses", object: @responses %>
+                    <%= render partial: "urls/summary", object: @grouped_responses, as: :grouped_responses %>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class= "col-md-3">
+                <div class="small-box bg-<%= @commit.score_color%>">
+                    <div class="inner">
+                        <h3> <%= @commit.score %></h3>
+                        <p>Combined score</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-connection-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                        including <%= pluralize(@commit.negative_responses, 'negative response')%>
+                        <i class="fa fa-exchange"></i>
+                    </a>
+                </div>
+            </div>
+            <div class= "col-md-3 align-self-center">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3> <%= @commit.responses.size %></h3>
+                        <p>Captured responses</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-connection-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">in <%= time_ago_in_words(@commit.created_at) %> <i class="fa fa-clock-o"></i></a>
                 </div>
             </div>
         </div>

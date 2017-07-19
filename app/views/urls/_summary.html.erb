@@ -1,0 +1,27 @@
+<div class="box-body no-padding">
+    <table class="table table-striped">
+        <tbody><tr>
+            <th style="width: 120px">Path</th>
+            <th>Number of requests</th>
+            <th>Percentage of negative responses</th>
+            <th>Minimum score</th>
+        </tr>
+        <% grouped_responses.each do |url, responses| %>
+                <tr>
+                    <td><%= link_to url.path, commit_url_responses_path(@commit.id, url.id) %></td>
+                    <td><%= responses.size %></td>
+                    <% ratio = responses.map(&:score).select(&:negative?).count/responses.size.to_f * 100 %>
+                    <td>
+                        <div class="progress progress-sm active">
+                            <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: <%= ratio %>%"></div>
+                        </div>
+                    </td>                
+                    <td>
+                    <% minimum = responses.map(&:score).min.round(0) %>
+                    <span class="badge bg-<%= url.result_color(minimum)%>"><%= minimum %></span></td>                
+             
+                </tr>
+        <% end %>
+        </tbody>
+    </table>
+</div>

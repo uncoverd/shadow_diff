@@ -18,6 +18,7 @@ class CommitsController < ApplicationController
       @pending_responses = []
       @redis_down = true
     end
+    @grouped_responses = @commit.responses.includes(:url).group_by(&:url)
     @responses = @commit.responses.order(time: :desc)
   end
 
