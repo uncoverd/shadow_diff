@@ -4,15 +4,15 @@ module ResponsesHelper
 
     #use to_f method to cast nil to 0
     def sql_requests_diff
-        (production_sql_requests.to_f - shadow_sql_requests.to_f).round(0)
+        (shadow_sql_requests.to_f - production_sql_requests.to_f).round(0)
     end
     
     def view_runtime_diff
-        production_view_runtime.to_f - shadow_view_runtime.to_f
+        shadow_view_runtime.to_f - production_view_runtime.to_f
     end
 
     def db_runtime_diff
-        production_db_runtime.to_f - shadow_db_runtime.to_f
+        shadow_db_runtime.to_f - production_db_runtime.to_f
     end
 
     def view_runtime_diff_output
