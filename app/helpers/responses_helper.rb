@@ -24,7 +24,21 @@ module ResponsesHelper
     end
 
     def sql_requests_diff_output
-        sql_requests_diff >= 0 ? "+ #{sql_requests_diff}" : sql_requests_diff
+        if sql_requests_diff == 0
+            'No change'
+        elsif sql_requests_diff > 0
+            "+ #{sql_requests_diff}"
+        else
+            sql_requests_diff
+        end          
     end
+
+    def metric_score_color
+        metric_score == 0 ? 'success' : 'danger'
+    end
+    
+    def shadow_diff_color
+        score == 0 ? 'success' : 'danger'
+    end    
     
 end
