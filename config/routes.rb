@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get '/rules/new/:response_id' => 'rules#new', as: 'new_rule'
   post '/rules' => 'rules#create'
   delete '/rules/:id' => 'rules#destroy', as: 'rule_destroy'
+  post '/commits/:commit_id/urls/:url_id/responses/:id/override' => 'responses#override_response', as: 'override_response'
+  post '/commits/:commit_id/urls/:url_id/override' => 'responses#override_url_response', as: 'override_url_response'
+
   mount Sidekiq::Web => '/sidekiq'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

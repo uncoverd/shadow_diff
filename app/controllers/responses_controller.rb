@@ -1,5 +1,5 @@
 class ResponsesController < ApplicationController
-  before_action :set_response, only: [:show, :edit, :update, :destroy]
+  before_action :set_response, only: [:show, :edit, :update, :destroy, :override_response]
   # GET /responses
   # GET /responses.json
   def index
@@ -63,6 +63,39 @@ class ResponsesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def override_response
+    if @response.override
+      @response.override = false
+    else
+      @response.override = true
+    end
+    @response.save
+    ScoreUpdateWorker.perform_async
+    respond_to do |format|
+      format.html { redirect_to commit_url_response_path(params[:commit_id], params[:url_id], params[:id]),
+                    notice: 'Response override was successfully toggled, scores should update in a few seconds.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def override_url_response
+    @responses = Response.where(commit: Commit.find(params[:commit_id]), url: Url.find(params[:url_id]))
+    @responses.each do |response|
+      if response.override
+        response.override = false
+      else
+        response.override = true
+      end  
+      response.save
+    end
+    ScoreUpdateWorker.perform_async
+    respond_to do |format|
+      format.html { redirect_to commit_url_responses_path(params[:commit_id], params[:url_id]),
+                    notice: ' URL override was successfully toggled, scores should update in a few seconds.' }
+      format.json { head :no_content }
+    end
+  end    
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -7,6 +7,8 @@
         Captured interactions for pull request <%= link_to @commit.description, @commit.commit_url %>
         <small><%= @commit.short_hash %></small>
         </h1>
+        <%= link_to "Toggle URL override", override_url_response_path(@commit.id, @url.id), :method=> :post %>
+
     </section>
 
 

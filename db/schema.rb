@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720113042) do
+ActiveRecord::Schema.define(version: 20170720121521) do
 
   create_table "commits", force: :cascade do |t|
     t.float    "score"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170720113042) do
     t.float    "production_view_runtime"
     t.float    "shadow_db_runtime"
     t.float    "production_db_runtime"
+    t.boolean  "override"
     t.index ["commit_id"], name: "index_responses_on_commit_id"
     t.index ["url_id"], name: "index_responses_on_url_id"
   end

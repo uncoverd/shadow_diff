@@ -14,7 +14,11 @@ class Commit < ApplicationRecord
         Rule.where(status: :missing).destroy_all
         responses.each do |response|
             comparator = ResponseComparator.new(response, response.rules.where(status: :active))
-            response.score = comparator.calculate_score
+            if response.override
+                response.score = 0
+            else
+                response.score = comparator.calculate_score
+            end    
             response.save
         end
         self.score = responses.inject(0){|sum,x| sum + x.score }

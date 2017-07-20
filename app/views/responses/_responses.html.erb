@@ -12,6 +12,9 @@
                     <td>
                         <% if response.score %>
                             <span class="badge bg-<%= response.color %>"><%= response.score %></span>
+                            <% if response.override %>
+                                <span class="label label-success">overridden</span>
+                            <% end %>
                         <% end %>
                     </td>
                 </tr>

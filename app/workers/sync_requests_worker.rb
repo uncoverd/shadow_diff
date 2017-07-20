@@ -30,7 +30,9 @@ class SyncRequestsWorker
         end    
         redis_connection.delete(response.id)
     end
-    ScoreUpdateWorker.perform_async
+    if new_responses.any?
+      ScoreUpdateWorker.perform_async
+    end  
   end
 
 end
