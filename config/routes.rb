@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  require 'sidekiq/cron/web'
+
   resources :comparison_results
   resources :urls
   root 'commits#index'
@@ -12,6 +15,6 @@ Rails.application.routes.draw do
   get '/rules/new/:response_id' => 'rules#new', as: 'new_rule'
   post '/rules' => 'rules#create'
   delete '/rules/:id' => 'rules#destroy', as: 'rule_destroy'
-
+  mount Sidekiq::Web => '/sidekiq'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
