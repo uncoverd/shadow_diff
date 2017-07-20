@@ -113,8 +113,8 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
       redis.hset(@request_id, :shadow_request, replaced_data)
       {:shadow => replaced_data, :production => data}
     else
-      puts "Bucardo is down, skipping request."
-      data
+      puts "Bucardo is down, sending to  production only."
+      {:production => data}
     end
   end
 
@@ -131,14 +131,15 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
       redis.hset(@request_id, :production, @data[:production])
       redis.hset(@request_id, :shadow, @data[:shadow])
       redis.hset(@request_id, :commit_hash, redis.get("commit_hash"))
+      if name == :shadow
+        detect_tokens(@data[:shadow], @request_id)
+        detect_bucardo_stop(@data[:shadow])
+      end
     else
       puts "Finished ignored request."
     end
 
-    if name == :shadow
-      detect_tokens(@data[:shadow], @request_id)
-      detect_bucardo_stop(@data[:shadow])
-    end
+    
     :close if name == :production
 
     if @bucardo_stopped && redis.get('bucardo_working').to_s != "true"
