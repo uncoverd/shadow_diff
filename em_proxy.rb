@@ -22,6 +22,7 @@ redis = Redis.new(:host => "127.0.0.1", :port => 6379, :db => 0)
 puts "Resetting slave db"
 redis.set("bucardo_active", "false")
 redis.set("bucardo_working", "false")
+redis.set("post_count", 0)
 
 BucardoResetWorker.perform_async
 
@@ -37,8 +38,7 @@ def detect_bucardo_stop(data)
   end
   if stop
     BucardoStopWorker.perform_async
-  end  
-  stop
+  end
 end  
 
 def detect_tokens(data, request_id)
@@ -84,7 +84,6 @@ end
 Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
   @start = Time.now
   @data = Hash.new("")
-  @bucardo_stopped = false
   @request_id = nil
   conn.server :shadow, :host => '178.62.228.7', :port => 3000    # testing, internal only
   conn.server :production, :host => '188.166.38.32', :port => 3000    # production, will render resposne
@@ -97,8 +96,6 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
       url = first_line.scan(/ \/.* /)[0]
       if ['POST','DELETE','PATCH'].include? verb
         puts "Processing non-idempotent request."
-        #redis.set('bucardo_active', "false")
-        #@bucardo_stopped = true
       else
         puts "Processing idempotent request."
       end
@@ -142,9 +139,10 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     
     :close if name == :production
 
-    if @bucardo_stopped && redis.get('bucardo_working').to_s != "true"
-      #puts "Finished non-idempotent request, reseting bucardo."
-      #BucardoResetWorker.perform_async
-    end
+    if redis.incr("post_count") >= 5 && redis.get('bucardo_working').to_s != "true"
+      puts "Reached limit of non-idempotent requests, resetting bucardo."
+      BucardoResetWorker.perform_async
+      redis.set("bucardo_active", "false")
+    end  
   end
 end
