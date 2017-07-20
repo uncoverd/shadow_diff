@@ -6,7 +6,9 @@ class ScoreUpdateWorker
   end
 
   def perform
-        Commit.last.update_scores
+      active_commit = Commit.last
+      active_commit.update_scores
+      GithubNotfier.new(active_commit)
   end
 
 end

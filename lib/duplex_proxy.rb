@@ -5,6 +5,7 @@ class DuplexProxy
     active_commit = Commit.find_or_create_by(commit_hash: commit)
     active_commit.description = title
     active_commit.commit_url = url
+    active_commit.repo = repo
     active_commit.save
     REDIS.with do |conn|
       conn.set("commit_hash", active_commit.commit_hash)
@@ -13,23 +14,17 @@ class DuplexProxy
     puts commit
     puts author
     spawn_proxy
-    notify_github(repo, commit, active_commit.github_status, active_commit.github_description)
+    GithubNotifier.new(active_commit)
   end
 
   def stop(repo, commit)
     puts "STOPING PROXY"
     kill_proxy
     active_commit = Commit.find_by(commit_hash: commit)
-    notify_github(repo, commit, active_commit.github_status, active_commit.github_description)
+    GithubNotifier.new(active_commit)
   end
 
   private
-
-  def notify_github(repo, commit, status, description)
-    Octokit.create_status(repo, commit, status,
-                          :context => 'Request shadowing',
-                          :description => description)
-  end
 
   def spawn_proxy
     REDIS.with do |conn|
