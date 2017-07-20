@@ -83,6 +83,8 @@ GEM
     connection_pool (2.2.1)
     diffy (3.2.0)
     erubis (2.7.0)
+    et-orbi (1.0.5)
+      tzinfo
     eventmachine (1.2.3)
     execjs (2.7.0)
     faraday (0.12.1)
@@ -162,6 +164,10 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (3.3.3)
+    redis-namespace (1.5.3)
+      redis (~> 3.0, >= 3.0.4)
+    rufus-scheduler (3.4.2)
+      et-orbi (~> 1.0)
     sass (3.4.24)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -177,6 +183,10 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.3, >= 3.3.3)
+    sidekiq-cron (0.4.5)
+      redis-namespace (>= 1.5.2)
+      rufus-scheduler (>= 2.0.24)
+      sidekiq (>= 4.2.1)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -241,6 +251,7 @@ DEPENDENCIES
   redis (~> 3.2)
   sass-rails (~> 5.0)
   sidekiq (~> 5.0.3)
+  sidekiq-cron (~> 0.4.0)
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

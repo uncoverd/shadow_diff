@@ -1,0 +1,5 @@
+schedule_example_job:  
+  cron: "* * * * *"
+  class: "SyncRequestsWorker"
+  queue: default
+  active_job: true
