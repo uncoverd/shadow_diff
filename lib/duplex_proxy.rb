@@ -40,7 +40,10 @@ class DuplexProxy
 
   def kill_proxy
     REDIS.with do |conn|
-      Process.kill("TERM", conn.get("proxy_PID").to_i)
+      begin
+        Process.kill("TERM", conn.get("proxy_PID").to_i)
+      rescue Errno::ESRCH
+      end    
       conn.set("proxy_PID", "0")
     end
   end  
