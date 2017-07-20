@@ -140,6 +140,7 @@ Proxy.start(:host => "0.0.0.0", :port => 8000, :debug => false) do |conn|
     :close if name == :production
 
     if redis.incr("post_count") >= 5 && redis.get('bucardo_working').to_s != "true"
+      redis.set("post_count", 0)
       puts "Reached limit of non-idempotent requests, resetting bucardo."
       BucardoResetWorker.perform_async
       redis.set("bucardo_active", "false")
