@@ -33,7 +33,7 @@ class BucardoController
        Net::SSH.start(@master_ip, 'root') do |ssh|
             [:stop_sync].each do |command|
                 puts "Running command " + command.to_s
-                output = ssh.exec!(COMMANDS[command])
+                output = ssh.exec(COMMANDS[command])
                 puts output
             end    
         end 
