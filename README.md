@@ -9,7 +9,8 @@ Implementirana rešitev omogoča:
 
 ## Senčenje spletnih zahtev
 
-+![Senčenje](general.png?raw=true)
+![Senčenje](general.png?raw=true)
+
 Senčenje spletnih zahtev temelji na naslednjih korakih:
 
 * posredniški strežnik podvaja produkcijske spletne zahteve v senčeno okolje z novo izdajo,
@@ -21,6 +22,12 @@ Senčenje spletnih zahtev temelji na naslednjih korakih:
 
 Za praktično uporabo senčenja produkcijskih zahtev ciljne spletne aplikacije je bila uporabljena arhitektura s sledečimi gradniki:
 
-* Posredniški strežnik za senčenje
-+![Implementacija](implementation.png?raw=true)
+* Aplikacijski strežnik s produkcijsko izdajo,
+* par aplikacijskih strežnikov s produkcijsko in testirano izdajo,
+* posredniški strežnik za senčenje (podvajanje spletnih zahtev in beleženje odgovorov),
+* aplikacija za nadzor in analizo senčenja,
+* podatkovna zbirka Redis (hramba spletnih odgovorov in metrik),
+* replicirana podatkovna baza (Bucardo)
+
+![Implementacija](implementation.png?raw=true)
 
