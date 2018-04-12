@@ -1,24 +1,26 @@
-# README
+# Avtomatska zaznava regresij s senčenjem produkcijskih zahtev
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ShadowDiff je celovita rešitev za zaznavanje regresij novih verzij ciljne spletne aplikacije, ki temelji na podvajanju spletnih zahtev v produkcijskem okolju.
 
-Things you may want to cover:
+Implementirana rešitev omogoča:
+* transparentno testiranje nove verzije ciljne aplikacije s produkcijskimi zahtevami,
+* avtomatsko zaznavanje vsebinskih in zmogljivostnih regresij nove verzije ciljne aplikacije,
+* preprosto integracijo s ciljnimi aplikacijami.
 
-* Ruby version
+## Senčenje spletnih zahtev
 
-* System dependencies
++![Senčenje](general.png?raw=true)
+Senčenje spletnih zahtev temelji na naslednjih korakih:
 
-* Configuration
+* posredniški strežnik podvaja produkcijske spletne zahteve v senčeno okolje z novo izdajo,
+* spletna zahteva se obdela v produkcijskem in senčenem okolju,
+* uporabnik dobi samo odgovor produkcijskega okolja,
+* primerjava obeh odgovorov na isto zahtevo omogoča zaznavo regresij.
 
-* Database creation
+## Implementacija
 
-* Database initialization
+Za praktično uporabo senčenja produkcijskih zahtev ciljne spletne aplikacije je bila uporabljena arhitektura s sledečimi gradniki:
 
-* How to run the test suite
+* Posredniški strežnik za senčenje
++![Implementacija](implementation.png?raw=true)
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
